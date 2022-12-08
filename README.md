@@ -1,4 +1,6 @@
-<p align="center"> <h1> <b>Ceres</b> </h1> <br/> <p> The official GoGoPool data gathering daemon. </p> </p>
+# Ceres
+
+The official GoGoPool data harvesting daemon.
 
 ## Architecture
 
