@@ -95,7 +95,9 @@ A `metric object` to get some data from a REST URL.
         source: "new_source",
         path: "/data",
         method: "post",
-        body: {start: 0}, //only valid on POST and PATCH
+        body: {
+            start: 0
+        }, //only valid on POST and PATCH
         args: [], // act as query args
         title: "Get data from a REST POST",
         desc: "Lorem ipsum",
@@ -105,3 +107,16 @@ A `metric object` to get some data from a REST URL.
     }
 
 }
+```
+
+Super-modular to allow for flexibility.
+
+Write a main.js that Deno can run, and the output will be JSON to stdout with all the data we want. Should only need small tweaks. Can use `import c from "./contracts.json" assert { type: "json" };` to get JSON data. Deno can compile to an exe as well.
+
+Write an exporter that takes as input the JSON, and outputs Prometheus formatted data.
+
+Write a dumper, that takes as input the JSON, and writes to SQLite DB.
+
+Wire it all together with docker-compose.
+
+The prometheus container will pull data on a sched by executing deno run main.js | exporter and Grafana will grab the data from Prom
