@@ -4,4 +4,4 @@ The official GoGoPool data harvesting daemon.
 
 ## Architecture
 
-See [ARCHITECTURE](ARCHITECTURE.md).
+See [ARCHITECTURE](docs/ARCHITECTURE.md).
