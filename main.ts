@@ -1,3 +1,4 @@
+import { parse } from "https://deno.land/std@0.119.0/flags/mod.ts";
 import { providers } from "https://cdn.skypack.dev/ethers?dts";
 
 import handlers from "./handlers/index.ts";
@@ -37,11 +38,47 @@ const handler = async (metrics: Metrics): Promise<any> => {
   return defaultFormatter(metrics, res);
 };
 
-const main = async () => {
+const gatherDashboards = async () => {
   // flatten the dashboards
   const metrics = dashboards.reduce((acc, curr) => [...acc, ...curr], []);
   const results = await Promise.all(metrics.map(handler));
-  console.log(results);
+  return results;
 };
 
-await main();
+const flags = parse(Deno.args, {
+  string: ["mode", "port"],
+  default: { mode: "stout", port: "8080" },
+});
+
+const serveHTTP = async (conn: Deno.Conn) => {
+  const httpConn = Deno.serveHttp(conn);
+  for await (const requestEvent of httpConn) {
+    const results = await gatherDashboards();
+    requestEvent.respondWith(
+      new Response(JSON.stringify(results), {
+        status: 200,
+        headers: new Headers({
+          "content-type": "application/json",
+        }),
+      })
+    );
+  }
+};
+
+switch (flags.mode) {
+  case "stout": {
+    const results = await gatherDashboards();
+    console.log(results);
+    break;
+  }
+  case "serve": {
+    const server = Deno.listen({ port: parseInt(flags.port) });
+    console.log(`Listening on port ${flags.port}`);
+    for await (const conn of server) {
+      serveHTTP(conn);
+    }
+    break;
+  }
+  default:
+    throw new Error(`Invalid mode: ${flags.mode}`);
+}

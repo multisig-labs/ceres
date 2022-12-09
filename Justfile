@@ -32,6 +32,9 @@ clean:
 run: check
     deno run --allow-net main.ts
 
+serve: check
+    deno run --allow-net main.ts --mode serve
+
 add mode="dashboard" name="":
     #!/bin/bash
     set -euo pipefail
