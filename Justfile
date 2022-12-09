@@ -39,7 +39,7 @@ add mode="dashboard" name="":
     #!/bin/bash
     set -euo pipefail
     if [ {{mode}} = "dashboard" ]; then
-      mkdir -p dashboard
+      mkdir -p dashboards
       echo -e "{{TEMPLATE_DASHBOARD}}" > dashboards/{{ name }}.ts
     elif [ {{mode}} = "deployment" ]; then
       deno run scripts/newDeployment.ts

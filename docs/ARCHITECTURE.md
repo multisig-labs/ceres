@@ -51,6 +51,8 @@ The class would scrape the data, transform it as necessary, and expose the data 
 
 Exports a list of metric objects.
 
+### Contracts
+
 A `metric object` to get contract data is defined as:
 
 ```js
@@ -68,6 +70,8 @@ A `metric object` to get contract data is defined as:
 }
 ```
 
+### JSON RPC
+
 A `metric object` to get some data from an RPC URL.
 
 ```js
@@ -77,7 +81,7 @@ A `metric object` to get some data from an RPC URL.
         source: "ava",
         path: "/ext/bc/P",
         method: "platform.getHeight",
-        args: [],
+        body: {}, // this acts as the params
         title: "Height of Pchain",
         desc: "Friendly description",
         formatter: (v) => (v) //or name of a defined formatting function,
@@ -98,14 +102,12 @@ A `metric object` to get some data from a REST URL.
         body: {
             start: 0
         }, //only valid on POST and PATCH
-        args: [], // act as query args
         title: "Get data from a REST POST",
         desc: "Lorem ipsum",
         formatter: (v) => { // this would also work
             return v.toString()
         }
     }
-
 }
 ```
 

@@ -56,4 +56,7 @@ const deployment = generateDeployment(
   eoaLabels
 );
 
-await Deno.writeTextFile("./data/deployment.json", JSON.stringify(deployment));
+await Deno.writeTextFile(
+  "./config/deployment.json",
+  JSON.stringify(deployment)
+);

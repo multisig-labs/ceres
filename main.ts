@@ -1,1 +1,39 @@
-import c from "./data/contracts.json" assert { type: "json" };
+import { providers } from "https://cdn.skypack.dev/ethers?dts";
+
+import handlers from "./handlers/index.ts";
+import type { Metrics } from "./lib/types.ts";
+
+const { contractHandler, rpcHandler, restHandler } = handlers;
+
+// import the contract ABIs
+import contracts from "./config/contracts.json" assert { type: "json" };
+// import the deployment from the config
+import deployment from "./config/deployment.json" assert { type: "json" };
+// import the dashboards
+import dashboards from "./dashboards/index.ts";
+
+const provider = new providers.StaticJsonRpcProvider(
+  deployment.sources.eth,
+  deployment.sources.chain.chainID
+);
+
+// deno-lint-ignore no-explicit-any
+const handler = (metrics: Metrics): Promise<any> => {
+  if (metrics.type === "contract") {
+    return contractHandler(provider, metrics, contracts, deployment);
+  } else if (metrics.type === "rpc") {
+    return rpcHandler(metrics, deployment);
+  } else if (metrics.type === "rest") {
+    return restHandler(metrics, deployment);
+  }
+  throw new Error("Invalid metrics type");
+};
+
+const main = async () => {
+  // flatten the dashboards
+  const metrics = dashboards.reduce((acc, curr) => [...acc, ...curr], []);
+  const results = await Promise.all(metrics.map(handler));
+  console.log(results);
+};
+
+await main();

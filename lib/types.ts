@@ -11,6 +11,7 @@ export interface EOALabels {
 interface Metric {
   source: string;
   contract?: string;
+  body?: any;
   method: string;
   path?: string;
   args: any[];
