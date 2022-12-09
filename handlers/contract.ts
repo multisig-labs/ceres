@@ -15,7 +15,8 @@ const contractHandler = (
   const address = deployment.sources.addresses?.[metric.contract] as string;
   if (!abi) throw new Error("Contract ABI not found");
   const contract = new Contract(address, abi, provider);
-  return contract[metric.method](...metric.args);
+  const args = metric.args || [];
+  return contract[metric.method](...args);
 };
 
 export default contractHandler;

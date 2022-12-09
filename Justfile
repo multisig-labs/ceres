@@ -1,23 +1,5 @@
-TEMPLATE_DASHBOARD := '// deno-lint-ignore-file no-explicit-any
-import { Metrics } from \"../lib/types.ts\";
-
-export default [
-  {
-    type: \"contract\",
-    metric: {
-      source: \"eth\",
-      contract: \"Contract\",
-      method: \"method\",
-      args: [],
-      formatter: (value: any) => value,
-      title: \"Title\",
-      desc: \"Description\",
-    },
-  } as Metrics,
-];'
-
-default:
-    @just --list --unsorted
+default: build 
+    ./ceres
 
 copy-contracts artifacts="../gogopool-contracts/artifacts":
     #!/usr/bin/env bash
@@ -27,22 +9,41 @@ copy-contracts artifacts="../gogopool-contracts/artifacts":
     | jq  'select(.contractName != null and (.contractName|startswith("Base")|not)) | {(.contractName): {abi: .abi}}' \
     | jq -s add > config/contracts.json
 
-build:
-    deno compile main.ts
+check:
+    #!/bin/bash
+    set -euo pipefail
+    if [ ! -f config/contracts.json ]; then
+      echo "Please run 'just copy-contracts' to create a contracts.json file"
+      exit 1
+    fi
+    if [ ! -f config/deployment.json ]; then
+      echo "Please run 'just add deployment' to create a deployment.json file"
+      exit 1
+    fi
+
+build: check
+    deno compile --allow-net main.ts
 
 compile: build
 
-run:
-    deno run main.ts
+clean:
+    rm -rf ceres
+
+run: check
+    deno run --allow-net main.ts
 
 add mode="dashboard" name="":
     #!/bin/bash
     set -euo pipefail
     if [ {{mode}} = "dashboard" ]; then
       mkdir -p dashboards
-      echo -e "{{TEMPLATE_DASHBOARD}}" > dashboards/{{ name }}.ts
+      if [ -f dashboards/{{ name }}.ts ]; then
+        echo "Dashboard already exists: dashboards/{{ name }}.ts"
+        exit 1
+      fi
+      cp templates/dashboard.ts dashboards/{{ name }}.ts
     elif [ {{mode}} = "deployment" ]; then
-      deno run scripts/newDeployment.ts
+      deno run --allow-write scripts/newDeployment.ts
     else
       echo "Unknown mode: {{mode}}"
     fi

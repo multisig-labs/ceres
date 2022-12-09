@@ -4,7 +4,7 @@ import type { Metrics } from "../lib/types.ts";
 const rpcHandler = async (metrics: Metrics, deployment: any) => {
   const metric = metrics.metric;
   if (!metric?.source) throw new Error("Source not found");
-  const url = deployment.sources[metric.source];
+  const url = deployment.sources[metric.source] + (metric.path || "");
   if (!url) throw new Error("Source URL not found");
   const body = JSON.stringify({
     jsonrpc: "2.0",
@@ -15,9 +15,17 @@ const rpcHandler = async (metrics: Metrics, deployment: any) => {
   const resp = await fetch(url, {
     method: "POST",
     body,
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
-  const data = await resp.json();
-  return data.result;
+  const respBody = await resp.text();
+  try {
+    const data = JSON.parse(respBody);
+    return data.result;
+  } catch (_e) {
+    return respBody;
+  }
 };
 
 export default rpcHandler;

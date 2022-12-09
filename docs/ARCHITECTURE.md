@@ -93,7 +93,6 @@ A `metric object` to get some data from a REST URL.
 
 ```js
 {
-
     type: "rest",
     metric: {
         source: "new_source",

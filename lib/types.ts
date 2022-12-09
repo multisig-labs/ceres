@@ -14,8 +14,8 @@ interface Metric {
   body?: any;
   method: string;
   path?: string;
-  args: any[];
-  formatter: (value: any) => string;
+  args?: any[];
+  formatter?: (value: any) => any;
   title: string;
   desc: string;
 }

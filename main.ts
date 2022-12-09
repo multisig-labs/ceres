@@ -18,15 +18,19 @@ const provider = new providers.StaticJsonRpcProvider(
 );
 
 // deno-lint-ignore no-explicit-any
-const handler = (metrics: Metrics): Promise<any> => {
+const handler = async (metrics: Metrics): Promise<any> => {
+  let res;
   if (metrics.type === "contract") {
-    return contractHandler(provider, metrics, contracts, deployment);
+    res = await contractHandler(provider, metrics, contracts, deployment);
   } else if (metrics.type === "rpc") {
-    return rpcHandler(metrics, deployment);
+    res = await rpcHandler(metrics, deployment);
   } else if (metrics.type === "rest") {
-    return restHandler(metrics, deployment);
+    res = await restHandler(metrics, deployment);
+  } else {
+    throw new Error("Invalid metrics type");
   }
-  throw new Error("Invalid metrics type");
+
+  return metrics.metric?.formatter ? metrics.metric.formatter(res) : res;
 };
 
 const main = async () => {
