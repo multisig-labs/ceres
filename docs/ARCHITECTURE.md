@@ -127,3 +127,7 @@ Write a dumper, that takes as input the JSON, and writes to SQLite DB.
 Wire it all together with docker-compose.
 
 The prometheus container will pull data on a sched by executing deno run main.js | exporter and Grafana will grab the data from Prom
+
+## Potential Changes
+
+There exists a [JSON Exporter](https://github.com/prometheus-community/json_exporter#json_exporter) already written in Go, and I think we should consider using that rather than writing our own. All we have to do is make the data we are scraping accessible via a simple web server (already done, super simple in Deno) and create a config file for the exporter. Then we just run the exporter on loop every few seconds. If we also want to dump the data into SQL, we can write a simple program to get the data from the JSON server and dump it into a SQLite file.
