@@ -2,6 +2,7 @@ import { providers } from "https://cdn.skypack.dev/ethers?dts";
 
 import handlers from "./handlers/index.ts";
 import type { Metrics } from "./lib/types.ts";
+import defaultFormatter from "./lib/defaultFormatter.ts";
 
 const { contractHandler, rpcHandler, restHandler } = handlers;
 
@@ -30,7 +31,10 @@ const handler = async (metrics: Metrics): Promise<any> => {
     throw new Error("Invalid metrics type");
   }
 
-  return metrics.metric?.formatter ? metrics.metric.formatter(res) : res;
+  if (metrics.metric?.formatter) {
+    return metrics.metric.formatter(metrics, res);
+  }
+  return defaultFormatter(metrics, res);
 };
 
 const main = async () => {

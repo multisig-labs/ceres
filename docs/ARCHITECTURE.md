@@ -8,7 +8,7 @@ The goal is to make a Javascript-based, generic class that could run in Deno tha
 
 The class would scrape the data, transform it as necessary, and expose the data for Prometheum/Grafana
 
-## `contracts.json`
+## `config/contracts.json`
 
 ```json
 {
@@ -21,7 +21,7 @@ The class would scrape the data, transform it as necessary, and expose the data 
 }
 ```
 
-## `deployment.json`
+## `config/deployment.json`
 
 ```js
 {
@@ -47,7 +47,7 @@ The class would scrape the data, transform it as necessary, and expose the data 
 }
 ```
 
-## `dashboard.js`
+## Dashboards
 
 Exports a list of metric objects.
 
@@ -65,7 +65,7 @@ A `metric object` to get contract data is defined as:
         args: [],
         title: "Some Data",
         desc: "Friendly description",
-        formatter: (v) => (v) // or name of a defined formatting function,
+        formatter: (m, v) => (v) // or name of a defined formatting function
     }
 }
 ```
@@ -84,10 +84,12 @@ A `metric object` to get some data from an RPC URL.
         body: {}, // this acts as the params
         title: "Height of Pchain",
         desc: "Friendly description",
-        formatter: (v) => (v) //or name of a defined formatting function,
+        formatter: (m, v) => (v) //or name of a defined formatting function
     }
 }
 ```
+
+### REST Request
 
 A `metric object` to get some data from a REST URL.
 
@@ -103,12 +105,16 @@ A `metric object` to get some data from a REST URL.
         }, //only valid on POST and PATCH
         title: "Get data from a REST POST",
         desc: "Lorem ipsum",
-        formatter: (v) => { // this would also work
+        formatter: (m, v) => { // this would also work
             return v.toString()
         }
     }
 }
 ```
+
+### Formatting info
+
+The formatting function has parameters `m` and `v` , with the types of `Metrics` and `any` respectively. The `Metrics` type can be found in [ `types.ts` ](https://github.com/multisig-labs/ceres/blob/main/lib/types.ts). It is up to the user to determine what the type `v` will be and to format their JSON as needed. An example of a formatter can be found in [ `lib/defaultFormatter.ts` ](https://github.com/multisig-labs/ceres/blob/main/lib/defaultFormatter.ts).
 
 Super-modular to allow for flexibility.
 

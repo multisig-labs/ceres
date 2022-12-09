@@ -10,10 +10,12 @@ export default [
       source: "blog",
       path: "/getArticles?max=3",
       method: "get",
-      formatter: (value: any) => {
-        return value.json().then((data: any) => {
-          return data?.items;
-        });
+      formatter: async (m: Metrics, value: any) => {
+        return {
+          title: m.metric.title,
+          desc: m.metric.desc,
+          value: (await value.json()).items,
+        };
       },
       title: "Chandlers Blog",
       desc: "Testing the REST API",

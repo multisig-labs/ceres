@@ -11,8 +11,12 @@ export default [
       contract: "TokenggAVAX",
       method: "totalAssets",
       args: [],
-      formatter: (value: any) => {
-        return { totalAssets: utils.formatEther(value) };
+      formatter: (m: Metrics, value: any) => {
+        return {
+          title: m.metric.title,
+          desc: m.metric.desc,
+          totalAssets: utils.formatEther(value),
+        };
       },
       title: "Total ggAVAX Assets",
       desc: "Total value of assets in the ggAVAX vault",
