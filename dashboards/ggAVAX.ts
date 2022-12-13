@@ -1,5 +1,4 @@
 // deno-lint-ignore-file no-explicit-any
-import { utils } from "https://cdn.skypack.dev/ethers?dts";
 
 import { Metrics } from "../lib/types.ts";
 
@@ -13,13 +12,15 @@ export default [
       args: [],
       formatter: (m: Metrics, value: any) => {
         return {
+          name: m.metric.name,
           title: m.metric.title,
           desc: m.metric.desc,
-          totalAssets: utils.formatEther(value),
+          value: value,
         };
       },
       title: "Total ggAVAX Assets",
       desc: "Total value of assets in the ggAVAX vault",
+      name: "totalAssets",
     },
   } as Metrics,
 ];

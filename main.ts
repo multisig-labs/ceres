@@ -4,6 +4,7 @@ import { providers } from "https://cdn.skypack.dev/ethers?dts";
 import handlers from "./handlers/index.ts";
 import type { Metrics } from "./lib/types.ts";
 import defaultFormatter from "./lib/defaultFormatter.ts";
+import newDB from "./db/db.ts";
 
 const { contractHandler, rpcHandler, restHandler } = handlers;
 
@@ -13,6 +14,7 @@ import contracts from "./config/contracts.json" assert { type: "json" };
 import deployment from "./config/deployment.json" assert { type: "json" };
 // import the dashboards
 import dashboards from "./dashboards/index.ts";
+import newModel from "./db/newModel.ts";
 
 const provider = new providers.StaticJsonRpcProvider(
   deployment.sources.eth,
@@ -65,6 +67,17 @@ const serveHTTP = async (conn: Deno.Conn) => {
   }
 };
 
+const dumpToDB = async () => {
+  const results = await gatherDashboards();
+  await newDB("./metrics.db");
+  await Promise.all(
+    results.map(async (result) => {
+      const metric = newModel(result);
+      await metric.save();
+    })
+  );
+};
+
 switch (flags.mode) {
   case "stout": {
     const results = await gatherDashboards();
@@ -79,6 +92,11 @@ switch (flags.mode) {
     }
     break;
   }
+  case "dump":
+    await dumpToDB();
+    break;
   default:
     throw new Error(`Invalid mode: ${flags.mode}`);
 }
+
+Deno.exit(0);

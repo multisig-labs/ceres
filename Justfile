@@ -35,6 +35,10 @@ run: check
 serve: check
     deno run --allow-net main.ts --mode serve
 
+dump: check
+    deno run --allow-write=. --allow-read=. --allow-net main.ts --mode dump
+
+
 add mode="dashboard" name="":
     #!/bin/bash
     set -euo pipefail

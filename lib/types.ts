@@ -15,9 +15,20 @@ interface Metric {
   method: string;
   path?: string;
   args?: any[];
-  formatter?: (metrics: Metrics, value: any) => any;
-  title: string;
-  desc: string;
+  formatter?: (
+    metrics: Metrics,
+    value: any
+  ) => ReturnedMetric | Promise<ReturnedMetric>;
+  title?: string;
+  desc?: string;
+  name: string;
+}
+
+export interface ReturnedMetric {
+  value: any;
+  title?: string;
+  desc?: string;
+  name: string;
 }
 
 export interface Metrics {

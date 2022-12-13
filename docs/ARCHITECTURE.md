@@ -59,6 +59,7 @@ A `metric object` to get contract data is defined as:
 {
     type: "contract",
     metric: {
+        name: "GetSomeData",
         source: "eth",
         contract: "ContractA",
         method: "getSomeData",
@@ -85,6 +86,7 @@ A `metric object` to get some data from an RPC URL.
         title: "Height of Pchain",
         desc: "Friendly description",
         formatter: (m, v) => (v) //or name of a defined formatting function
+        name: "rpcObj", // alphanumeric name
     }
 }
 ```
@@ -97,6 +99,7 @@ A `metric object` to get some data from a REST URL.
 {
     type: "rest",
     metric: {
+        name: "restRequest",
         source: "new_source",
         path: "/data",
         method: "post",
