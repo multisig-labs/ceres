@@ -82,9 +82,10 @@ const serveHTTP = async (conn: Deno.Conn) => {
 
 const dumpToDB = async () => {
   const results = await gatherDashboards();
+  // get all the values from the results
   await newDB("./metrics.db");
   await Promise.all(
-    results.map(async (result) => {
+    Object.values(results).map(async (result) => {
       const metric = newModel(result);
       await metric.save();
     })
