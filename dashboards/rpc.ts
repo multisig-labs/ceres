@@ -18,7 +18,7 @@ export default [
           name: m.metric.name,
           title: m.metric.title,
           desc: m.metric.desc,
-          value: value.height,
+          value: parseInt(value.height),
         };
       },
     },
