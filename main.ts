@@ -8,10 +8,6 @@ import newDB from "./db/db.ts";
 
 const { contractHandler, rpcHandler, restHandler } = handlers;
 
-// import the contract ABIs
-import contracts from "./config/contracts.json" assert { type: "json" };
-// import the deployment from the config
-import deployment from "./config/deployment.json" assert { type: "json" };
 // import the dashboards
 import dashboards from "./dashboards/index.ts";
 import newModel from "./db/newModel.ts";
@@ -20,6 +16,14 @@ Deno.addSignalListener("SIGINT", () => {
   console.log("interrupted!");
   Deno.exit(0);
 });
+
+// read the contracts.json at runtime
+const contractsRaw = await Deno.readTextFile("./config/contracts.json");
+const contracts = JSON.parse(contractsRaw);
+
+// read the deployment.json at runtime
+const deploymentRaw = await Deno.readTextFile("./config/deployment.json");
+const deployment = JSON.parse(deploymentRaw);
 
 const provider = new providers.StaticJsonRpcProvider(
   deployment.sources.eth,

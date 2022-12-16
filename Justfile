@@ -22,7 +22,7 @@ check:
     fi
 
 build: check
-    deno compile --allow-net main.ts
+    deno compile --allow-net --allow-read --allow-write main.ts
 
 build-docker:
     #!/bin/bash
@@ -36,20 +36,22 @@ build-docker:
     fi
     docker build -f docker/Dockerfile.$ARCH -t ceres .
 
+run-docker mode="stout":
+    docker run --rm -p 8080:8080 -v $(pwd)/config:/app/config ceres --mode {{mode}}
+
 compile: build
 
 clean:
     rm -rf ceres
 
 run: check
-    deno run --allow-net main.ts
+    deno run --allow-net --allow-read=config main.ts
 
 serve: check
-    deno run --allow-net main.ts --mode serve
+    deno run --allow-net --allow-read=config main.ts --mode serve
 
 dump: check
     deno run --allow-write=. --allow-read=. --allow-net main.ts --mode dump
-
 
 add mode="dashboard" name="":
     #!/bin/bash
