@@ -21,7 +21,7 @@ check:
       exit 1
     fi
 
-build: check
+build:
     deno compile --allow-net --allow-read --allow-write main.ts
 
 build-docker:
@@ -36,8 +36,17 @@ build-docker:
     fi
     docker build -f docker/Dockerfile.$ARCH -t ceres .
 
-run-docker mode="stout":
+run-docker mode="stout": check
     docker run --rm -p 8080:8080 -v $(pwd)/config:/app/config ceres --mode {{mode}}
+
+up mode="dev": build-docker
+    docker-compose -f docker/docker-compose-{{mode}}.yml up -d
+
+logs mode="dev":
+    docker-compose -f docker/docker-compose-{{mode}}.yml logs -f
+
+down mode="dev":
+    docker-compose -f docker/docker-compose-{{mode}}.yml down 
 
 compile: build
 

@@ -12,5 +12,5 @@ WORKDIR /app
 
 COPY --from=builder /app/ceres .
 
-ENTRYPOINT ["/app/ceres"]
+ENTRYPOINT ["/app/ceres", "--mode"]
 
