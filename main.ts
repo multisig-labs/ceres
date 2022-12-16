@@ -1,4 +1,4 @@
-import { parse } from "https://deno.land/std@0.119.0/flags/mod.ts";
+import { parse } from "https://deno.land/std@0.168.0/flags/mod.ts";
 import { providers } from "https://cdn.skypack.dev/ethers?dts";
 
 import handlers from "./handlers/index.ts";
@@ -15,6 +15,11 @@ import deployment from "./config/deployment.json" assert { type: "json" };
 // import the dashboards
 import dashboards from "./dashboards/index.ts";
 import newModel from "./db/newModel.ts";
+
+Deno.addSignalListener("SIGINT", () => {
+  console.log("interrupted!");
+  Deno.exit(0);
+});
 
 const provider = new providers.StaticJsonRpcProvider(
   deployment.sources.eth,
