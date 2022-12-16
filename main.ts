@@ -61,8 +61,8 @@ const gatherDashboards = async (): Promise<ReturnedMetrics> => {
 };
 
 const flags = parse(Deno.args, {
-  string: ["mode", "port"],
-  default: { mode: "stout", port: "8080" },
+  string: ["mode", "port", "path"],
+  default: { mode: "stout", port: "8080", path: "./metrics.db" },
 });
 
 const serveHTTP = async (conn: Deno.Conn) => {
@@ -81,10 +81,10 @@ const serveHTTP = async (conn: Deno.Conn) => {
   }
 };
 
-const dumpToDB = async () => {
+const dumpToDB = async (path: string) => {
   const results = await gatherDashboards();
   // get all the values from the results
-  await newDB("./metrics.db");
+  await newDB(path);
   await Promise.all(
     Object.values(results).map(async (result) => {
       const metric = newModel(result);
@@ -108,7 +108,7 @@ switch (flags.mode) {
     break;
   }
   case "dump":
-    await dumpToDB();
+    await dumpToDB(flags.path);
     break;
   default:
     throw new Error(`Invalid mode: ${flags.mode}`);

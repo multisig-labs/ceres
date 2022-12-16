@@ -1,6 +1,8 @@
-default: build 
-    ./ceres
+# default task
+default: 
+    just --list
 
+# copies the contracts.json file from the specified hardhat artifacts directory
 copy-contracts artifacts="../gogopool-contracts/artifacts":
     #!/usr/bin/env bash
     set -euo pipefail
@@ -9,21 +11,23 @@ copy-contracts artifacts="../gogopool-contracts/artifacts":
     | jq  'select(.contractName != null and (.contractName|startswith("Base")|not)) | {(.contractName): {abi: .abi}}' \
     | jq -s add > config/contracts.json
 
+[private]
 check:
     #!/bin/bash
     set -euo pipefail
     if [ ! -f config/contracts.json ]; then
-      echo "Please run 'just copy-contracts' to create a contracts.json file"
-      exit 1
+      echo "Optional contracts.json file is missing. If you want to use the contracts, please run 'just copy-contracts <path to hardhat artifacts>'."
     fi
     if [ ! -f config/deployment.json ]; then
       echo "Please run 'just add deployment' to create a deployment.json file"
       exit 1
     fi
 
+# builds the executable
 build:
     deno compile --allow-net --allow-read --allow-write main.ts
 
+# builds the docker image
 build-docker:
     #!/bin/bash
     set -euo pipefail
@@ -36,32 +40,42 @@ build-docker:
     fi
     docker build -f docker/Dockerfile.$ARCH -t ceres .
 
-run-docker mode="stout": check
+# runs the executable in docker
+run-docker mode="stout": build-docker check
     docker run --rm -p 8080:8080 -v $(pwd)/config:/app/config ceres --mode {{mode}}
 
-up mode="dev": build-docker
+# starts the daemon. Specify mode=prod to run in production mode (without grafana)
+up mode="dev": build-docker check
     docker-compose -f docker/docker-compose-{{mode}}.yml up -d
 
+# shows daemon logs
 logs mode="dev":
     docker-compose -f docker/docker-compose-{{mode}}.yml logs -f
 
+# stops the daemon
 down mode="dev":
     docker-compose -f docker/docker-compose-{{mode}}.yml down 
 
+# alias for build
 compile: build
 
+# cleans the build artifacts
 clean:
     rm -rf ceres
 
+# runs the executable in stout mode
 run: check
     deno run --allow-net --allow-read=config main.ts
 
+# runs the executable in serve mode
 serve: check
     deno run --allow-net --allow-read=config main.ts --mode serve
 
+# runs the executable in dump mode
 dump: check
     deno run --allow-write=. --allow-read=. --allow-net main.ts --mode dump
 
+# adds a new deployment or dashboard
 add mode="dashboard" name="":
     #!/bin/bash
     set -euo pipefail
