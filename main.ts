@@ -2,7 +2,7 @@ import { parse } from "https://deno.land/std@0.168.0/flags/mod.ts";
 import { providers } from "https://cdn.skypack.dev/ethers?dts";
 
 import handlers from "./handlers/index.ts";
-import type { Metrics } from "./lib/types.ts";
+import type { Metrics, ReturnedMetric, ReturnedMetrics } from "./lib/types.ts";
 import defaultFormatter from "./lib/defaultFormatter.ts";
 import newDB from "./db/db.ts";
 
@@ -30,8 +30,7 @@ const provider = new providers.StaticJsonRpcProvider(
   deployment.sources.chain.chainID
 );
 
-// deno-lint-ignore no-explicit-any
-const handler = async (metrics: Metrics): Promise<any> => {
+const handler = async (metrics: Metrics): Promise<ReturnedMetric> => {
   let res;
   if (metrics.type === "contract") {
     res = await contractHandler(provider, metrics, contracts, deployment);
@@ -49,11 +48,16 @@ const handler = async (metrics: Metrics): Promise<any> => {
   return defaultFormatter(metrics, res);
 };
 
-const gatherDashboards = async () => {
+const gatherDashboards = async (): Promise<ReturnedMetrics> => {
   // flatten the dashboards
+  // spread (...) doesn't work on dashboards because it's a default export
   const metrics = dashboards.reduce((acc, curr) => [...acc, ...curr], []);
   const results = await Promise.all(metrics.map(handler));
-  return results;
+  const obj = {} as ReturnedMetrics;
+  results.forEach((result) => {
+    obj[result.name as string] = result;
+  });
+  return obj;
 };
 
 const flags = parse(Deno.args, {

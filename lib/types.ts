@@ -35,3 +35,7 @@ export interface Metrics {
   type: "contract" | "rpc" | "rest";
   metric: Metric;
 }
+
+export interface ReturnedMetrics {
+  [key: string]: ReturnedMetric;
+}
