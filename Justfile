@@ -24,6 +24,18 @@ check:
 build: check
     deno compile --allow-net main.ts
 
+build-docker:
+    #!/bin/bash
+    set -euo pipefail
+    ARCH=$(uname -m)
+    if [ $ARCH = "aarch64" ]; then
+      ARCH="arm64"
+    fi
+    if [ $ARCH = "x86_64" ]; then
+      ARCH="amd64"
+    fi
+    docker build -f docker/Dockerfile.$ARCH -t ceres .
+
 compile: build
 
 clean:
