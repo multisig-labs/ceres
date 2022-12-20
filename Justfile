@@ -75,6 +75,9 @@ serve: check
 dump: check
     deno run --allow-write=. --allow-read=. --allow-net main.ts --mode dump
 
+debug mode="stout": check
+    deno run --inspect-brk --allow-net --allow-read=config main.ts --mode {{mode}}
+
 # adds a new deployment or dashboard
 add mode="dashboard" name="":
     #!/bin/bash

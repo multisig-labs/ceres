@@ -1,6 +1,4 @@
 // add new dashboards here
-import ggAVAX from "./ggAVAX.ts";
-import blog from "./blog.ts";
-import rpc from "./rpc.ts";
+import MinipoolDashboard from "./minipools.ts";
 
-export default [ggAVAX, blog, rpc];
+export default [MinipoolDashboard];

@@ -5,25 +5,20 @@ import handlers from "./handlers/index.ts";
 import type { Metrics, ReturnedMetric, ReturnedMetrics } from "./lib/types.ts";
 import defaultFormatter from "./lib/defaultFormatter.ts";
 import newDB from "./db/db.ts";
+import newModel from "./db/newModel.ts";
+import loadConfig from "./lib/loadConfig.ts";
 
-const { contractHandler, rpcHandler, restHandler } = handlers;
+const { contractHandler, rpcHandler, restHandler, customHandler } = handlers;
 
 // import the dashboards
 import dashboards from "./dashboards/index.ts";
-import newModel from "./db/newModel.ts";
 
 Deno.addSignalListener("SIGINT", () => {
   console.log("interrupted!");
   Deno.exit(0);
 });
 
-// read the contracts.json at runtime
-const contractsRaw = await Deno.readTextFile("./config/contracts.json");
-const contracts = JSON.parse(contractsRaw);
-
-// read the deployment.json at runtime
-const deploymentRaw = await Deno.readTextFile("./config/deployment.json");
-const deployment = JSON.parse(deploymentRaw);
+const { contracts, deployment } = await loadConfig();
 
 const provider = new providers.StaticJsonRpcProvider(
   deployment.sources.eth,
@@ -32,14 +27,21 @@ const provider = new providers.StaticJsonRpcProvider(
 
 const handler = async (metrics: Metrics): Promise<ReturnedMetric> => {
   let res;
-  if (metrics.type === "contract") {
-    res = await contractHandler(provider, metrics, contracts, deployment);
-  } else if (metrics.type === "rpc") {
-    res = await rpcHandler(metrics, deployment);
-  } else if (metrics.type === "rest") {
-    res = await restHandler(metrics, deployment);
-  } else {
-    throw new Error("Invalid metrics type");
+  switch (metrics.type) {
+    case "contract":
+      res = await contractHandler(provider, metrics, contracts, deployment);
+      break;
+    case "rpc":
+      res = await rpcHandler(metrics, deployment);
+      break;
+    case "rest":
+      res = await restHandler(metrics, deployment);
+      break;
+    case "custom":
+      res = await customHandler(provider, metrics, contracts, deployment);
+      break;
+    default:
+      throw new Error("Invalid metrics type");
   }
 
   if (metrics.metric?.formatter) {
@@ -69,7 +71,6 @@ const serveHTTP = async (conn: Deno.Conn) => {
   const httpConn = Deno.serveHttp(conn);
   for await (const requestEvent of httpConn) {
     const results = await gatherDashboards();
-    console.log(results);
     requestEvent.respondWith(
       new Response(JSON.stringify(results), {
         status: 200,
@@ -93,25 +94,30 @@ const dumpToDB = async (path: string) => {
   );
 };
 
-switch (flags.mode) {
-  case "stout": {
-    const results = await gatherDashboards();
-    console.log(results);
-    break;
-  }
-  case "serve": {
-    const server = Deno.listen({ port: parseInt(flags.port) });
-    console.log(`Listening on port ${flags.port}`);
-    for await (const conn of server) {
-      serveHTTP(conn);
+try {
+  switch (flags.mode) {
+    case "stout": {
+      const results = await gatherDashboards();
+      console.log(results);
+      break;
     }
-    break;
+    case "serve": {
+      const server = Deno.listen({ port: parseInt(flags.port) });
+      console.log(`Listening on port ${flags.port}`);
+      for await (const conn of server) {
+        serveHTTP(conn);
+      }
+      break;
+    }
+    case "dump":
+      await dumpToDB(flags.path);
+      break;
+    default:
+      throw new Error(`Invalid mode: ${flags.mode}`);
   }
-  case "dump":
-    await dumpToDB(flags.path);
-    break;
-  default:
-    throw new Error(`Invalid mode: ${flags.mode}`);
+} catch (e) {
+  console.error(e);
+  Deno.exit(1);
 }
 
 Deno.exit(0);

@@ -115,15 +115,37 @@ A `metric object` to get some data from a REST URL.
 }
 ```
 
+### Custom
+
+A `metric object` with a custom method that gets called.
+
+```js
+{
+    type: "rest",
+    metric: {
+        name: "restRequest",
+        args: ['post', 1, 5.4],
+        fn: (provider, metrics, contracts, deployments, ...values) => {
+            return callAMethodHere(...values);
+        },
+        title: "Get data from custom method",
+        desc: "Lorem ipsum",
+        formatter: (m, v) => {
+            return v.toString()
+        }
+    }
+}
+```
+
 ### Formatting info
 
 The formatting function has parameters `m` and `v` , with the types of `Metrics` and `any` respectively. The `Metrics` type can be found in [ `types.ts` ](https://github.com/multisig-labs/ceres/blob/main/lib/types.ts). It is up to the user to determine what the type `v` will be and to format their JSON as needed. An example of a formatter can be found in [ `lib/defaultFormatter.ts` ](https://github.com/multisig-labs/ceres/blob/main/lib/defaultFormatter.ts).
 
 Super-modular to allow for flexibility.
 
-Write a main.js that Deno can run, and the output will be JSON to stdout with all the data we want. Should only need small tweaks. Can use `import c from "./contracts.json" assert { type: "json" };` to get JSON data. Deno can compile to an exe as well.
+Write a main.js that Deno can run, and the output will be JSON to stdout with all the data we want. Should only need small tweaks. ~~Can use `import c from "./contracts.json" assert { type: "json" };` to get JSON data.~~ Config data is loaded at runtime rather than at compile time. Deno can compile to an exe as well.
 
-Write an exporter that takes as input the JSON, and outputs Prometheus formatted data.
+~~Write an exporter that takes as input the JSON, and outputs Prometheus formatted data.~~ We are using the [Prometheus JSON Exporter](https://github.com/prometheus-community/json_exporter#json_exporter).
 
 Write a dumper, that takes as input the JSON, and writes to SQLite DB.
 
