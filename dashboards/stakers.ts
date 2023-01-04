@@ -19,3 +19,28 @@ const getAllStakers = async () => {
   const resp = await contract["getStakers"](...args);
   return stakerTransformer(resp);
 };
+
+const stakerMetrics: Metrics[] = [
+  {
+    type: "custom",
+    metric: {
+      source: "custom",
+      fn: getAllStakers,
+      title: "Number of Stakers",
+      desc: "Total number of stakers",
+      name: "numStakers",
+      args: [],
+      // deno-lint-ignore no-explicit-any
+      formatter: (metrics: Metrics, res: any[]): ReturnedMetric => {
+        return {
+          name: metrics.metric.name,
+          title: metrics.metric.title,
+          desc: metrics.metric.desc,
+          value: res.length,
+        };
+      },
+    },
+  },
+];
+
+export default stakerMetrics;
