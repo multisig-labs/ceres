@@ -125,8 +125,8 @@ A `metric object` with a custom method that gets called.
     metric: {
         name: "restRequest",
         args: ['post', 1, 5.4],
-        fn: (provider, metrics, contracts, deployments, ...values) => {
-            return callAMethodHere(...values);
+        fn: (...args) => {
+            return callAMethodHere(...args);
         },
         title: "Get data from custom method",
         desc: "Lorem ipsum",
