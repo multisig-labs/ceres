@@ -1,5 +1,4 @@
 // deno-lint-ignore-file no-explicit-any
-
 export interface Addresses {
   [key: string]: string;
 }
@@ -12,7 +11,7 @@ interface Metric {
   source: string;
   contract?: string;
   body?: any;
-  method: string;
+  method?: string;
   path?: string;
   args?: any[];
   formatter?: (
@@ -22,6 +21,7 @@ interface Metric {
   title?: string;
   desc?: string;
   name: string;
+  fn?: (...args: any) => any | Promise<any>;
 }
 
 export interface ReturnedMetric {
@@ -32,7 +32,7 @@ export interface ReturnedMetric {
 }
 
 export interface Metrics {
-  type: "contract" | "rpc" | "rest";
+  type: "contract" | "rpc" | "rest" | "custom";
   metric: Metric;
 }
 
