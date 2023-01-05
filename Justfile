@@ -41,7 +41,7 @@ build-docker:
     docker build -f docker/Dockerfile.$ARCH -t ceres .
 
 # runs the executable in docker
-run-docker mode="stout": build-docker check
+run-docker mode="stout": check
     docker run --rm -p 8080:8080 -v $(pwd)/config:/app/config ceres --mode {{mode}}
 
 # starts the daemon. Specify mode=prod to run in production mode (without grafana)

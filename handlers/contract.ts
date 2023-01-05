@@ -16,6 +16,9 @@ const contractHandler = (
   if (!abi) throw new Error("Contract ABI not found");
   const contract = new Contract(address, abi, provider);
   const args = metric.args || [];
+  if (!metric.method) {
+    throw new Error("Contract method not found");
+  }
   return contract[metric.method](...args);
 };
 
