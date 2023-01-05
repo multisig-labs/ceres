@@ -4,6 +4,7 @@ import StakerDashboard from "./stakers.ts";
 import ggAVAXDashboard from "./ggAVAX.ts";
 import StakingDashboard from "./staking.ts";
 import ProtocolDAODashboard from "./protocol.ts";
+import OracleDashboard from "./oracle.ts";
 
 export default [
   MinipoolDashboard,
@@ -11,4 +12,5 @@ export default [
   ggAVAXDashboard,
   StakingDashboard,
   ProtocolDAODashboard,
+  OracleDashboard,
 ];
