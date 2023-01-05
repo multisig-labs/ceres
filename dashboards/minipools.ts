@@ -1,4 +1,4 @@
-import { Metrics, ReturnedMetric } from "../lib/types.ts";
+import type { Metrics, ReturnedMetric } from "../lib/types.ts";
 import { MINIPOOL_STATUS_MAP } from "../lib/utils/utils.js";
 // import { minipoolTransformer } from "../lib/utils/transformers.js";
 
