@@ -20,6 +20,12 @@ Deno.addSignalListener("SIGINT", () => {
 
 const flags = parse(Deno.args, {
   string: ["mode", "port", "path", "concurrency"],
+  alias: {
+    mode: "m",
+    port: "p",
+    path: "d",
+    concurrency: "n",
+  },
   default: {
     mode: "stout",
     port: "8080",
