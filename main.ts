@@ -18,6 +18,18 @@ Deno.addSignalListener("SIGINT", () => {
   Deno.exit(0);
 });
 
+const flags = parse(Deno.args, {
+  string: ["mode", "port", "path", "concurrency"],
+  default: {
+    mode: "stout",
+    port: "8080",
+    path: "./metrics.db",
+    concurrency: "15",
+  },
+});
+
+const concurrentRequests = parseInt(flags.concurrency);
+
 const { contracts, deployment } = await loadConfig();
 
 const provider = new providers.StaticJsonRpcProvider(
@@ -50,11 +62,22 @@ const handler = async (metrics: Metrics): Promise<ReturnedMetric> => {
   return defaultFormatter(metrics, res);
 };
 
-const gatherDashboards = async (): Promise<ReturnedMetrics> => {
+const gatherDashboards = async (
+  concurrentRequests = 15
+): Promise<ReturnedMetrics> => {
   // flatten the dashboards
   // spread (...) doesn't work on dashboards because it's a default export
   const metrics = dashboards.reduce((acc, curr) => [...acc, ...curr], []);
-  const results = await Promise.all(metrics.map(handler));
+  // chunk metrics into groups of 10
+  const metricChunks: Metrics[][] = [];
+  while (metrics.length > 0) {
+    metricChunks.push(metrics.splice(0, concurrentRequests));
+  }
+  const results = [];
+  for (const chunk of metricChunks) {
+    const res = await Promise.all(chunk.map(handler));
+    results.push(...res);
+  }
   const obj = {} as ReturnedMetrics;
   results.forEach((result) => {
     obj[result.name as string] = result;
@@ -62,15 +85,10 @@ const gatherDashboards = async (): Promise<ReturnedMetrics> => {
   return obj;
 };
 
-const flags = parse(Deno.args, {
-  string: ["mode", "port", "path"],
-  default: { mode: "stout", port: "8080", path: "./metrics.db" },
-});
-
 const serveHTTP = async (conn: Deno.Conn) => {
   const httpConn = Deno.serveHttp(conn);
   for await (const requestEvent of httpConn) {
-    const results = await gatherDashboards();
+    const results = await gatherDashboards(concurrentRequests);
     requestEvent.respondWith(
       new Response(JSON.stringify(results), {
         status: 200,
@@ -83,7 +101,7 @@ const serveHTTP = async (conn: Deno.Conn) => {
 };
 
 const dumpToDB = async (path: string) => {
-  const results = await gatherDashboards();
+  const results = await gatherDashboards(concurrentRequests);
   // get all the values from the results
   await newDB(path);
   await Promise.all(
@@ -97,7 +115,7 @@ const dumpToDB = async (path: string) => {
 try {
   switch (flags.mode) {
     case "stout": {
-      const results = await gatherDashboards();
+      const results = await gatherDashboards(concurrentRequests);
       console.log(results);
       break;
     }

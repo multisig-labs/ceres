@@ -22,46 +22,46 @@ const RewardsDashboard: Metrics[] = [
       },
     },
   },
-  // {
-  //   type: "contract",
-  //   metric: {
-  //     source: "eth",
-  //     contract: "RewardsPool",
-  //     method: "getRewardsCycleStartTime",
-  //     args: [],
-  //     title: "Rewards Cycle Seconds",
-  //     desc: "The length of a rewards cycle",
-  //     name: "rewardsCycleSeconds",
-  //     formatter: (m: Metrics, value: BigNumber): ReturnedMetric => {
-  //       return {
-  //         name: m.metric.name,
-  //         title: m.metric.title,
-  //         desc: m.metric.desc,
-  //         value: new Date(value.toNumber() * 1000),
-  //       };
-  //     },
-  //   },
-  // },
-  // {
-  //   type: "contract",
-  //   metric: {
-  //     source: "eth",
-  //     contract: "RewardsPool",
-  //     method: "getRewardsCyclesElapsed",
-  //     args: [],
-  //     title: "Rewards Cycles Elapsed",
-  //     desc: "The number of rewards cycles that have elapsed",
-  //     name: "rewardsCyclesElapsed",
-  //     formatter: (m: Metrics, value: BigNumber): ReturnedMetric => {
-  //       return {
-  //         name: m.metric.name,
-  //         title: m.metric.title,
-  //         desc: m.metric.desc,
-  //         value: value.toNumber(),
-  //       };
-  //     },
-  //   },
-  // },
+  {
+    type: "contract",
+    metric: {
+      source: "eth",
+      contract: "RewardsPool",
+      method: "getRewardsCycleStartTime",
+      args: [],
+      title: "Rewards Cycle Seconds",
+      desc: "The length of a rewards cycle",
+      name: "rewardsCycleSeconds",
+      formatter: (m: Metrics, value: BigNumber): ReturnedMetric => {
+        return {
+          name: m.metric.name,
+          title: m.metric.title,
+          desc: m.metric.desc,
+          value: new Date(value.toNumber() * 1000),
+        };
+      },
+    },
+  },
+  {
+    type: "contract",
+    metric: {
+      source: "eth",
+      contract: "RewardsPool",
+      method: "getRewardsCyclesElapsed",
+      args: [],
+      title: "Rewards Cycles Elapsed",
+      desc: "The number of rewards cycles that have elapsed",
+      name: "rewardsCyclesElapsed",
+      formatter: (m: Metrics, value: BigNumber): ReturnedMetric => {
+        return {
+          name: m.metric.name,
+          title: m.metric.title,
+          desc: m.metric.desc,
+          value: value.toNumber(),
+        };
+      },
+    },
+  },
   {
     type: "contract",
     metric: {
@@ -71,7 +71,7 @@ const RewardsDashboard: Metrics[] = [
       args: [],
       title: "Rewards Cycle Seconds",
       desc: "The length of a rewards cycle",
-      name: "rewardsCycleSeconds",
+      name: "rewardCycleTotalAmt",
       formatter: (m: Metrics, value: BigNumber): ReturnedMetric => {
         return {
           name: m.metric.name,

@@ -4,6 +4,7 @@ import loadConfig from "../lib/loadConfig.ts";
 import { stakerTransformer } from "../lib/utils/transformers.js";
 import type { Metrics, ReturnedMetric } from "../lib/types.ts";
 
+// This is fishy and needs fixed
 const getAllStakers = async () => {
   const { contracts, deployment } = await loadConfig();
   const provider = new providers.StaticJsonRpcProvider(
