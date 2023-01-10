@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import { providers, Contract } from "https://cdn.skypack.dev/ethers?dts";
+import { providers, Contract } from "npm:ethers@5.7.2";
 
 import type { Metrics } from "../lib/types.ts";
 
@@ -16,6 +16,9 @@ const contractHandler = (
   if (!abi) throw new Error("Contract ABI not found");
   const contract = new Contract(address, abi, provider);
   const args = metric.args || [];
+  if (!metric.method) {
+    throw new Error("Contract method not found");
+  }
   return contract[metric.method](...args);
 };
 

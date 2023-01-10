@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import { utils } from "https://cdn.skypack.dev/ethers?dts";
+import { utils } from "npm:ethers@5.7.2";
 
 import { Metrics } from "../lib/types.ts";
 

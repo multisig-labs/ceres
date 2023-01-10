@@ -1,5 +1,5 @@
 import { parse } from "https://deno.land/std@0.168.0/flags/mod.ts";
-import { providers } from "https://cdn.skypack.dev/ethers?dts";
+import { providers } from "npm:ethers@5.7.2";
 
 import handlers from "./handlers/index.ts";
 import type { Metrics, ReturnedMetric, ReturnedMetrics } from "./lib/types.ts";
@@ -17,6 +17,24 @@ Deno.addSignalListener("SIGINT", () => {
   console.log("interrupted!");
   Deno.exit(0);
 });
+
+const flags = parse(Deno.args, {
+  string: ["mode", "port", "path", "concurrency"],
+  alias: {
+    mode: "m",
+    port: "p",
+    path: "d",
+    concurrency: "n",
+  },
+  default: {
+    mode: "stout",
+    port: "8080",
+    path: "./metrics.db",
+    concurrency: "15",
+  },
+});
+
+const concurrentRequests = parseInt(flags.concurrency);
 
 const { contracts, deployment } = await loadConfig();
 
@@ -50,11 +68,22 @@ const handler = async (metrics: Metrics): Promise<ReturnedMetric> => {
   return defaultFormatter(metrics, res);
 };
 
-const gatherDashboards = async (): Promise<ReturnedMetrics> => {
+const gatherDashboards = async (
+  concurrentRequests = 15
+): Promise<ReturnedMetrics> => {
   // flatten the dashboards
   // spread (...) doesn't work on dashboards because it's a default export
   const metrics = dashboards.reduce((acc, curr) => [...acc, ...curr], []);
-  const results = await Promise.all(metrics.map(handler));
+  // chunk metrics into groups of 10
+  const metricChunks: Metrics[][] = [];
+  while (metrics.length > 0) {
+    metricChunks.push(metrics.splice(0, concurrentRequests));
+  }
+  const results = [];
+  for (const chunk of metricChunks) {
+    const res = await Promise.all(chunk.map(handler));
+    results.push(...res);
+  }
   const obj = {} as ReturnedMetrics;
   results.forEach((result) => {
     obj[result.name as string] = result;
@@ -62,15 +91,10 @@ const gatherDashboards = async (): Promise<ReturnedMetrics> => {
   return obj;
 };
 
-const flags = parse(Deno.args, {
-  string: ["mode", "port", "path"],
-  default: { mode: "stout", port: "8080", path: "./metrics.db" },
-});
-
 const serveHTTP = async (conn: Deno.Conn) => {
   const httpConn = Deno.serveHttp(conn);
   for await (const requestEvent of httpConn) {
-    const results = await gatherDashboards();
+    const results = await gatherDashboards(concurrentRequests);
     requestEvent.respondWith(
       new Response(JSON.stringify(results), {
         status: 200,
@@ -83,7 +107,7 @@ const serveHTTP = async (conn: Deno.Conn) => {
 };
 
 const dumpToDB = async (path: string) => {
-  const results = await gatherDashboards();
+  const results = await gatherDashboards(concurrentRequests);
   // get all the values from the results
   await newDB(path);
   await Promise.all(
@@ -97,7 +121,7 @@ const dumpToDB = async (path: string) => {
 try {
   switch (flags.mode) {
     case "stout": {
-      const results = await gatherDashboards();
+      const results = await gatherDashboards(concurrentRequests);
       console.log(results);
       break;
     }

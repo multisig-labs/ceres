@@ -1,6 +1,6 @@
-import { Metrics, ReturnedMetric } from "../lib/types.ts";
+import type { Metrics, ReturnedMetric } from "../lib/types.ts";
 import { MINIPOOL_STATUS_MAP } from "../lib/utils/utils.js";
-// import { minipoolTransformer } from "../lib/utils/transformers.js";
+import { utils, BigNumber } from "npm:ethers@5.7.2";
 
 const minipoolCalls: Metrics[] = Object.keys(MINIPOOL_STATUS_MAP).map(
   (status) => {
@@ -30,4 +30,26 @@ const minipoolCalls: Metrics[] = Object.keys(MINIPOOL_STATUS_MAP).map(
   }
 );
 
-export default minipoolCalls;
+export default [
+  ...minipoolCalls,
+  {
+    type: "contract",
+    metric: {
+      source: "eth",
+      contract: "MinipoolManager",
+      method: "getTotalAVAXLiquidStakerAmt",
+      args: [],
+      title: "Total AVAX Liquid Staker Amount",
+      desc: "Total amount of AVAX liquid stakers have deposited",
+      name: "totalAVAXLiquidStakerAmt",
+      formatter: (m: Metrics, value: BigNumber) => {
+        return {
+          name: m.metric.name,
+          title: m.metric.title,
+          desc: m.metric.desc,
+          value: Number(utils.formatEther(value)),
+        } as ReturnedMetric;
+      },
+    },
+  } as Metrics,
+];

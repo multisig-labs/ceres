@@ -1,9 +1,10 @@
-import { providers, Contract } from "https://cdn.skypack.dev/ethers?dts";
+import { providers, Contract } from "npm:ethers@5.7.2";
 
 import loadConfig from "../lib/loadConfig.ts";
 import { stakerTransformer } from "../lib/utils/transformers.js";
 import type { Metrics, ReturnedMetric } from "../lib/types.ts";
 
+// This is fishy and needs fixed
 const getAllStakers = async () => {
   const { contracts, deployment } = await loadConfig();
   const provider = new providers.StaticJsonRpcProvider(
