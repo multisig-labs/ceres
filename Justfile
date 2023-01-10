@@ -65,18 +65,18 @@ clean:
 
 # runs the executable in stout mode
 run: check
-    deno run --allow-net --allow-read=config main.ts
+    deno run --allow-net --allow-read main.ts
 
 # runs the executable in serve mode
 serve: check
-    deno run --allow-net --allow-read=config main.ts --mode serve
+    deno run --allow-net --allow-read main.ts --mode serve
 
 # runs the executable in dump mode
 dump: check
-    deno run --allow-write=. --allow-read=. --allow-net main.ts --mode dump
+    deno run --allow-write=. --allow-read --allow-net main.ts --mode dump
 
 debug mode="stout": check
-    deno run --inspect-brk --allow-net --allow-read=config main.ts --mode {{mode}}
+    deno run --inspect-brk --allow-net --allow-read main.ts --mode {{mode}}
 
 # adds a new deployment or dashboard
 add mode="dashboard" name="":

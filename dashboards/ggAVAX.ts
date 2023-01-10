@@ -1,5 +1,5 @@
 import type { Metrics, ReturnedMetric } from "../lib/types.ts";
-import { utils } from "https://cdn.skypack.dev/ethers?dts";
+import { utils } from "npm:ethers@5.7.2";
 
 const ggAVAXDashboard: Metrics[] = [
   {
