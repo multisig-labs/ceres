@@ -1,14 +1,12 @@
 import { parse } from "https://deno.land/std@0.168.0/flags/mod.ts";
 import { providers } from "npm:ethers@5.7.2";
 
-import handlers from "./handlers/index.ts";
+import { contractHandler, rpcHandler, restHandler, customHandler } from "./handlers/index.ts";
 import type { Metrics, ReturnedMetric, ReturnedMetrics } from "./lib/types.ts";
 import defaultFormatter from "./lib/defaultFormatter.ts";
 import newDB from "./db/db.ts";
 import newModel from "./db/newModel.ts";
 import loadConfig from "./lib/loadConfig.ts";
-
-const { contractHandler, rpcHandler, restHandler, customHandler } = handlers;
 
 // import the dashboards
 import dashboards from "./dashboards/index.ts";

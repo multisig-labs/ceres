@@ -1,11 +1,9 @@
-import rpcHandler from "./rpc.ts";
-import restHandler from "./rest.ts";
-import contractHandler from "./contract.ts";
-import customHandler from "./custom.ts";
+import rpc from "./rpc.ts";
+import rest from "./rest.ts";
+import contract from "./contract.ts";
+import custom from "./custom.ts";
 
-export default {
-  contractHandler,
-  restHandler,
-  rpcHandler,
-  customHandler,
-};
+export const rpcHandler = rpc;
+export const restHandler = rest;
+export const contractHandler = contract;
+export const customHandler = custom;
