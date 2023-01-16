@@ -1,4 +1,4 @@
-import { utils } from "npm:ethers@5.7.2";
+import { utils } from "https://cdn.skypack.dev/ethers?dts";
 
 import inferType from "../lib/inferType.ts";
 import { ReturnedMetric } from "../lib/types.ts";

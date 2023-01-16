@@ -1,5 +1,5 @@
 import type { Metrics, ReturnedMetric } from "../lib/types.ts";
-import { utils, BigNumber } from "npm:ethers@5.7.2";
+import { utils, BigNumber } from "https://cdn.skypack.dev/ethers?dts";
 
 const RewardsDashboard: Metrics[] = [
   {

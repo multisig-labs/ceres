@@ -1,6 +1,6 @@
 import type { Metrics, ReturnedMetric } from "../lib/types.ts";
 import { MINIPOOL_STATUS_MAP } from "../lib/utils/utils.js";
-import { utils, BigNumber } from "npm:ethers@5.7.2";
+import { utils, BigNumber } from "https://cdn.skypack.dev/ethers?dts";
 
 const minipoolCalls: Metrics[] = Object.keys(MINIPOOL_STATUS_MAP).map(
   (status) => {
