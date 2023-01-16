@@ -45,25 +45,31 @@ const provider = new providers.StaticJsonRpcProvider(
 
 const handler = async (metrics: Metrics): Promise<ReturnedMetric> => {
   let res;
-  switch (metrics.type) {
-    case "contract":
-      res = await contractHandler(provider, metrics, contracts, deployment);
-      break;
-    case "rpc":
-      res = await rpcHandler(metrics, deployment);
-      break;
-    case "rest":
-      res = await restHandler(metrics, deployment);
-      break;
-    case "custom":
-      res = await customHandler(provider, metrics, contracts, deployment);
-      break;
-    default:
-      throw new Error("Invalid metrics type");
-  }
+  try {
+    switch (metrics.type) {
+      case "contract":
+        res = await contractHandler(provider, metrics, contracts, deployment);
+        break;
+      case "rpc":
+        res = await rpcHandler(metrics, deployment);
+        break;
+      case "rest":
+        res = await restHandler(metrics, deployment);
+        break;
+      case "custom":
+        res = await customHandler(provider, metrics, contracts, deployment);
+        break;
+      default:
+        throw new Error("Invalid metrics type");
+    } 
 
-  if (metrics.metric?.formatter) {
-    return metrics.metric.formatter(metrics, res);
+    if (metrics.metric?.formatter) {
+      return metrics.metric.formatter(metrics, res);
+    }
+  } catch (e) {
+    console.error(e)
+    // set the response to be null
+    res = null;
   }
   return defaultFormatter(metrics, res);
 };
