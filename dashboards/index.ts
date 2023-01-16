@@ -7,6 +7,7 @@ import ProtocolDAODashboard from "./protocol.ts";
 import OracleDashboard from "./oracle.ts";
 import RewardsDashboard from "./rewards.ts";
 import RialtoDashboard from "./rialto.ts";
+import OrcDashboard from "./orc.ts";
 
 export default [
   MinipoolDashboard,
@@ -17,4 +18,5 @@ export default [
   OracleDashboard,
   RewardsDashboard,
   RialtoDashboard,
+  OrcDashboard,
 ];
