@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import { providers, Contract } from "npm:ethers@5.7.2";
+import { Contract, providers } from "npm:ethers@5.7.2";
 
 import type { Metrics } from "../lib/types.ts";
 
@@ -7,7 +7,7 @@ const contractHandler = (
   provider: providers.Provider,
   metrics: Metrics,
   contracts: any,
-  deployment: any
+  deployment: any,
 ): Promise<any> => {
   const metric = metrics.metric;
   if (!metric?.contract) throw new Error("Contract not found");

@@ -12,11 +12,11 @@ See [ARCHITECTURE](docs/ARCHITECTURE.md).
 
 Ceres is the Roman god of harvest.
 
-## Prerequisites 
+## Prerequisites
 
-* [Deno](https://deno.land/)
-* [Just](https://just.systems/man/en/)
-* [Docker](https://www.docker.com/)
+- [Deno](https://deno.land/)
+- [Just](https://just.systems/man/en/)
+- [Docker](https://www.docker.com/)
 
 ## Available Just Recipes
 

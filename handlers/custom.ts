@@ -6,7 +6,7 @@ const customHandler = (
   provider: providers.Provider,
   metrics: Metrics,
   contracts: any,
-  deployment: any
+  deployment: any,
 ): Promise<any> | any => {
   if (!metrics.metric.fn) throw new Error("Function not found");
   const args = metrics.metric.args || [];

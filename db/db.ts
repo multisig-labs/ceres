@@ -3,7 +3,7 @@ import {
   SQLite3Connector,
 } from "https://deno.land/x/denodb@v1.1.0/mod.ts";
 
-import { StringMetric, IntegerMetric, FloatMetric } from "./models.ts";
+import { FloatMetric, IntegerMetric, StringMetric } from "./models.ts";
 
 const newDB = async (path: string): Promise<Database> => {
   const connector = new SQLite3Connector({

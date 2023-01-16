@@ -1,5 +1,5 @@
 import type { Metrics, ReturnedMetric } from "../lib/types.ts";
-import { utils, BigNumber } from "npm:ethers@5.7.2";
+import { BigNumber, utils } from "npm:ethers@5.7.2";
 
 const ProtocolDAODashboard: Metrics[] = [
   {
@@ -10,7 +10,8 @@ const ProtocolDAODashboard: Metrics[] = [
       method: "getRewardsEligibilityMinSeconds",
       args: [],
       title: "Rewards Eligibility Min Seconds",
-      desc: "The minimum amount of time a user must stake to be eligible for rewards",
+      desc:
+        "The minimum amount of time a user must stake to be eligible for rewards",
       name: "rewardsEligibilityMinSeconds",
       formatter: (m: Metrics, value: BigNumber): ReturnedMetric => {
         return {

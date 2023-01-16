@@ -1,5 +1,5 @@
 import type { Metrics, ReturnedMetric } from "../lib/types.ts";
-import { utils, BigNumber } from "npm:ethers@5.7.2";
+import { BigNumber, utils } from "npm:ethers@5.7.2";
 
 const RewardsDashboard: Metrics[] = [
   {

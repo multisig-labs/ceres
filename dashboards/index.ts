@@ -6,6 +6,7 @@ import StakingDashboard from "./staking.ts";
 import ProtocolDAODashboard from "./protocol.ts";
 import OracleDashboard from "./oracle.ts";
 import RewardsDashboard from "./rewards.ts";
+import RialtoDashboard from "./rialto.ts";
 
 export default [
   MinipoolDashboard,
@@ -15,4 +16,5 @@ export default [
   ProtocolDAODashboard,
   OracleDashboard,
   RewardsDashboard,
+  RialtoDashboard,
 ];

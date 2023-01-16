@@ -1,4 +1,4 @@
-import type { ReturnedMetric, Metrics } from "./types.ts";
+import type { Metrics, ReturnedMetric } from "./types.ts";
 
 // deno-lint-ignore no-explicit-any
 export default (m: Metrics, v: any): ReturnedMetric => {

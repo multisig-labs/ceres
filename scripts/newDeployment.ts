@@ -6,7 +6,7 @@ const generateDeployment = (
   chainName: string,
   chainID: number,
   addresses: Addresses,
-  eoaLabels: EOALabels
+  eoaLabels: EOALabels,
 ) => {
   return {
     sources: {
@@ -38,7 +38,7 @@ for (let i = 0; i < nOfAddresses; i++) {
 }
 
 const nOfEOALabels = parseInt(
-  prompt("Enter the number of EOA labels: ") || "0"
+  prompt("Enter the number of EOA labels: ") || "0",
 );
 const eoaLabels: EOALabels = {};
 for (let i = 0; i < nOfEOALabels; i++) {
@@ -53,10 +53,10 @@ const deployment = generateDeployment(
   chainName!,
   chainID,
   addresses,
-  eoaLabels
+  eoaLabels,
 );
 
 await Deno.writeTextFile(
   "./config/deployment.json",
-  JSON.stringify(deployment)
+  JSON.stringify(deployment),
 );

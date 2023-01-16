@@ -1,4 +1,4 @@
-import { providers, Contract } from "npm:ethers@5.7.2";
+import { Contract, providers } from "npm:ethers@5.7.2";
 
 import loadConfig from "../lib/loadConfig.ts";
 import { stakerTransformer } from "../lib/utils/transformers.js";
@@ -9,7 +9,7 @@ const getAllStakers = async () => {
   const { contracts, deployment } = await loadConfig();
   const provider = new providers.StaticJsonRpcProvider(
     deployment.sources.eth,
-    deployment.sources.chain.chainID
+    deployment.sources.chain.chainID,
   );
 
   const abi = contracts["Staking"]?.abi;

@@ -27,6 +27,13 @@ check:
 build:
     deno compile --allow-net --allow-read --allow-write main.ts
 
+# Formats the project
+fmt:
+    deno fmt
+
+# Alias for fmt
+format: fmt
+
 # builds the docker image
 build-docker:
     #!/bin/bash

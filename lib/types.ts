@@ -16,7 +16,7 @@ interface Metric {
   args?: any[];
   formatter?: (
     metrics: Metrics,
-    value: any
+    value: any,
   ) => ReturnedMetric | Promise<ReturnedMetric>;
   title?: string;
   desc?: string;

@@ -40,7 +40,7 @@ const { contracts, deployment } = await loadConfig();
 
 const provider = new providers.StaticJsonRpcProvider(
   deployment.sources.eth,
-  deployment.sources.chain.chainID
+  deployment.sources.chain.chainID,
 );
 
 const handler = async (metrics: Metrics): Promise<ReturnedMetric> => {
@@ -69,7 +69,7 @@ const handler = async (metrics: Metrics): Promise<ReturnedMetric> => {
 };
 
 const gatherDashboards = async (
-  concurrentRequests = 15
+  concurrentRequests = 15,
 ): Promise<ReturnedMetrics> => {
   // flatten the dashboards
   // spread (...) doesn't work on dashboards because it's a default export
@@ -101,7 +101,7 @@ const serveHTTP = async (conn: Deno.Conn) => {
         headers: new Headers({
           "content-type": "application/json",
         }),
-      })
+      }),
     );
   }
 };
@@ -114,7 +114,7 @@ const dumpToDB = async (path: string) => {
     Object.values(results).map(async (result) => {
       const metric = newModel(result);
       await metric.save();
-    })
+    }),
   );
 };
 

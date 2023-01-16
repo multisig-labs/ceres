@@ -2,7 +2,7 @@ import { utils } from "npm:ethers@5.7.2";
 
 import inferType from "../lib/inferType.ts";
 import { ReturnedMetric } from "../lib/types.ts";
-import { StringMetric, IntegerMetric, FloatMetric } from "./models.ts";
+import { FloatMetric, IntegerMetric, StringMetric } from "./models.ts";
 
 const newModel = (metric: ReturnedMetric) => {
   const type = inferType(metric.value);
