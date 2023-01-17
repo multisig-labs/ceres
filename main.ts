@@ -1,5 +1,5 @@
 import { parse } from "https://deno.land/std@0.168.0/flags/mod.ts";
-import { providers } from "npm:ethers@5.7.2";
+import { providers } from "https://cdn.skypack.dev/ethers?dts";
 
 import { contractHandler, rpcHandler, restHandler, customHandler } from "./handlers/index.ts";
 import type { Metrics, ReturnedMetric, ReturnedMetrics } from "./lib/types.ts";

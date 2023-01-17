@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import { providers } from "npm:ethers@5.7.2";
+import { providers } from "https://cdn.skypack.dev/ethers?dts";
 import type { Metrics } from "../lib/types.ts";
 
 const customHandler = (

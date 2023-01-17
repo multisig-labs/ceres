@@ -1,5 +1,6 @@
 import type { Metrics, ReturnedMetric } from "../lib/types.ts";
-import { BigNumber, utils } from "npm:ethers@5.7.2";
+import { utils, BigNumber } from "https://cdn.skypack.dev/ethers?dts";
+
 
 const OracleDashboard: Metrics[] = [
   {

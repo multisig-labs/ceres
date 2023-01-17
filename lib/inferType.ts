@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
 
-import { BigNumber } from "npm:ethers@5.7.2";
+import { BigNumber } from "https://cdn.skypack.dev/ethers?dts";
 
 const inferType = (value: any): string => {
   const type = typeof value;
