@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import { providers, Contract } from "npm:ethers@5.7.2";
+import { providers, Contract } from "https://cdn.skypack.dev/ethers?dts";
 
 import type { Metrics } from "../lib/types.ts";
 
