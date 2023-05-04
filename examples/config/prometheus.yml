@@ -1,0 +1,20 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: json
+    metrics_path: /probe
+    params:
+      module: [default]
+    static_configs:
+      - targets:
+          - http://ceres:8080
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        ## Location of the json exporter's real <hostname>:<port>
+        replacement: host.docker.internal:7979 # equivalent to "localhost:7979"

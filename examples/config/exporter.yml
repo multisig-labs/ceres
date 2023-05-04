@@ -1,0 +1,8 @@
+modules:
+  default:
+    metrics:
+      - name: total_ggavax_assets
+        path: "{ .totalAssets.value }"
+        help: "Total ggAVAX assets"
+        labels:
+          asset: "ggAVAX"

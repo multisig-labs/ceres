@@ -1,0 +1,51 @@
+name: metrics
+version: "3.9"
+
+services:
+  harvester:
+    container_name: harvester
+    image: ghcr.io/multisig-labs/ceres:main
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../config:/app/config
+    command: serve
+    stop_signal: SIGINT
+    user: "0:0"
+
+  exporter:
+    platform: linux/amd64
+    container_name: exporter
+    restart: always
+    volumes:
+      - ../config:/app/config
+    image: quay.io/prometheuscommunity/json-exporter
+    command:
+      - --config.file=/app/config/exporter.yml
+    ports:
+      - "7979:7979"
+    user: "${UID:-0}:${GID:-0}"
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    restart: always
+    platform: linux/amd64
+    ports:
+      - "9090:9090"
+    volumes:
+      - ../config:/etc/prometheus
+      - ../data/prometheus:/prometheus
+    user: "${UID:-0}:${GID:-0}"
+
+  grafana:
+    image: grafana/grafana:8.3.2
+    container_name: grafana
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - ../data/grafana:/var/lib/grafana
+      - ../config/grafana.ini:/etc/grafana/grafana.ini
+    user: "${UID:-0}:${GID:-0}"

@@ -1,0 +1,7 @@
+config/*
+*.db
+data
+ceres
+output.json
+.DS_Store
+.env

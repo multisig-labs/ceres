@@ -1,0 +1,15 @@
+FROM lukechannings/deno:v1.32.3 AS builder
+
+WORKDIR /app
+
+COPY . .
+
+RUN deno compile --unsafely-ignore-certificate-errors --allow-net --allow-write --allow-read --output ceres main.ts
+
+FROM debian:bullseye-slim
+
+WORKDIR /app
+
+COPY --from=builder /app/ceres .
+
+ENTRYPOINT ["/app/ceres", "--mode"]

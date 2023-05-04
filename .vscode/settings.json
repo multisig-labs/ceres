@@ -1,0 +1,13 @@
+{
+  "deno.enable": true,
+  "deno.unstable": true,
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "denoland.vscode-deno",
+  "cSpell.words": [
+    "AVAX",
+    "Minipool",
+    "Ocyticus",
+    "Tokengg"
+  ]
+}
