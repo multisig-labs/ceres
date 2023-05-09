@@ -21,6 +21,8 @@ interface Metric {
   title?: string;
   desc?: string;
   name: string;
+  labels?: Record<string, string>;
+  ignore?: boolean;
   fn?: (...args: any) => any | Promise<any>;
 }
 

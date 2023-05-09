@@ -31,7 +31,7 @@ const StakingDashboard: Metrics[] = [
       args: [],
       title: "Total GGP Stake",
       desc: "The total amount of GGP staked",
-      name: "totalGGPStake",
+      name: "totalGgpStake",
       formatter: (m: Metrics, value: BigNumber): ReturnedMetric => {
         return {
           name: m.metric.name,

@@ -29,6 +29,9 @@ const rialtoUp: Metrics[] = participants.map((
       title: `Rialto ${capitalize(name)} Up`,
       desc: `Whether or not Rialto ${capitalize(name)} is up`,
       name: `Rialto${capitalize(name)}Up`,
+      labels: {
+        version: `{ .Rialto${capitalize(name)}Version.value }`,
+      },
       formatter: (
         m: Metrics,
         value: Response | null,
@@ -88,6 +91,7 @@ const rialtoVersion: Metrics[] = participants.map((name: string) => {
       title: `Rialto ${capitalize(name)} Version`,
       desc: `Version of Rialto ${capitalize(name)}`,
       name: `Rialto${capitalize(name)}Version`,
+      ignore: true,
       formatter: async (
         m: Metrics,
         value: Response | null,

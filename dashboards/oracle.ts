@@ -11,7 +11,7 @@ const OracleDashboard: Metrics[] = [
       args: [],
       title: "GGP Price in AVAX",
       desc: "The price of GGP in AVAX",
-      name: "ggpPriceInAVAX",
+      name: "ggpPriceInAvax",
       formatter: (m: Metrics, value: BigNumber[]): ReturnedMetric => {
         return {
           name: m.metric.name,

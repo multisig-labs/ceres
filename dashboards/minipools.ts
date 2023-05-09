@@ -24,7 +24,10 @@ const minipoolCalls: Metrics[] = Object.keys(MINIPOOL_STATUS_MAP).map(
         },
         title: `Minipools ${status}`,
         desc: `Total number of minipools in ${status}`,
-        name: `minipools${status}`,
+        name: `minipoolsStatus${status}`,
+        labels: {
+          status: status.toLowerCase(),
+        },
       },
     } as Metrics;
   },
@@ -41,7 +44,7 @@ export default [
       args: [],
       title: "Total AVAX Liquid Staker Amount",
       desc: "Total amount of AVAX liquid stakers have deposited",
-      name: "totalAVAXLiquidStakerAmt",
+      name: "totalAvaxLiquidStakerAmt",
       formatter: (m: Metrics, value: BigNumber) => {
         return {
           name: m.metric.name,

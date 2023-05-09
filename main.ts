@@ -108,6 +108,7 @@ const serveHTTP = async (conn: Deno.Conn) => {
   const httpConn = Deno.serveHttp(conn);
   for await (const requestEvent of httpConn) {
     const results = await gatherDashboards(concurrentRequests);
+    console.log("Serving request");
     requestEvent.respondWith(
       new Response(JSON.stringify(results), {
         status: 200,

@@ -132,3 +132,6 @@ add mode="dashboard" name="":
 
 updateAddrs storageAddr="0x1cEa17F9dE4De28FeB6A102988E12D4B90DfF1a9" rpcURL="https://api.avax.network/ext/bc/C/rpc" chainID="43114":
   deno run --allow-net --allow-read=config scripts/updateAddresses.ts -a {{storageAddr}} -u {{rpcURL}} -i {{chainID}}
+
+gen-export:
+  deno run --allow-write --allow-read scripts/genYAML.ts
