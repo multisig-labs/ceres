@@ -91,4 +91,4 @@ const addressesObj = result.reduce((acc, curr) => {
 // @ts-ignore: Add storage address to the object
 addressesObj["Storage"] = storageAddr;
 
-console.log(addressesObj);
+console.log(JSON.stringify(addressesObj, null, 2));

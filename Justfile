@@ -130,5 +130,5 @@ add mode="dashboard" name="":
       echo "Unknown mode: {{mode}}"
     fi
 
-updateAddrs storageAddr="0x3C4065953939EA1B91E17Dfd99Dd1a78E268b150" rpcURL="https://api.avax-test.network/ext/bc/C/rpc" chainID="43113":
+updateAddrs storageAddr="0x1cEa17F9dE4De28FeB6A102988E12D4B90DfF1a9" rpcURL="https://api.avax.network/ext/bc/C/rpc" chainID="43114":
   deno run --allow-net --allow-read=config scripts/updateAddresses.ts -a {{storageAddr}} -u {{rpcURL}} -i {{chainID}}
