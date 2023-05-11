@@ -30,7 +30,7 @@ const currency: Metrics[] = [
       fn: async (): Promise<number> => {
         const db = await Deno.openKv();
         const avaxPrice = await db.get<AvaxPrice>(["avaxPrice"]);
-        if (avaxPrice?.value && avaxPrice.value.lastUpdated.getTime() > Date.now() - timeout) {
+        if (avaxPrice?.value && (Date.now() + timeout < avaxPrice.value.lastUpdated.getTime())) {
           return avaxPrice.value.price;
         }
 
