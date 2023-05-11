@@ -8,6 +8,7 @@ import OracleDashboard from "./oracle.ts";
 import RewardsDashboard from "./rewards.ts";
 import RialtoDashboard from "./rialto.ts";
 import OrcDashboard from "./orc.ts";
+import CurrencyDashboard from './currency.ts';
 
 export default [
   MinipoolDashboard,
@@ -19,4 +20,5 @@ export default [
   RewardsDashboard,
   RialtoDashboard,
   OrcDashboard,
+  CurrencyDashboard,
 ];
