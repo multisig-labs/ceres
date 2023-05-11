@@ -27,7 +27,7 @@ check:
 
 # builds the executable
 build:
-    deno compile --allow-net --allow-read --allow-write main.ts
+    deno compile --unstable --allow-net --allow-read --allow-write main.ts
 
 # Formats the project
 fmt:
@@ -100,18 +100,18 @@ clean:
 
 # runs the executable in stout mode
 run *json: check
-    deno run --allow-net --allow-read main.ts {{json}}
+    deno run --unstable --allow-net --allow-read main.ts {{json}}
 
 # runs the executable in serve mode
 serve: check
-    deno run --allow-net --allow-read main.ts --mode serve
+    deno run --unstable --allow-net --allow-read main.ts --mode serve
 
 # runs the executable in dump mode
 dump: check
-    deno run --allow-write=. --allow-read --allow-net main.ts --mode dump
+    deno run --unstable --allow-write=. --allow-read --allow-net main.ts --mode dump
 
 debug mode="stout": check
-    deno run --inspect-brk --allow-net --allow-read main.ts --mode {{mode}}
+    deno run --unstable --inspect-brk --allow-net --allow-read main.ts --mode {{mode}}
 
 # adds a new deployment or dashboard
 add mode="dashboard" name="":
@@ -131,4 +131,4 @@ add mode="dashboard" name="":
     fi
 
 updateAddrs storageAddr="0x1cEa17F9dE4De28FeB6A102988E12D4B90DfF1a9" rpcURL="https://api.avax.network/ext/bc/C/rpc" chainID="43114":
-  deno run --allow-net --allow-read=config scripts/updateAddresses.ts -a {{storageAddr}} -u {{rpcURL}} -i {{chainID}}
+  deno run --unstable --allow-net --allow-read=config scripts/updateAddresses.ts -a {{storageAddr}} -u {{rpcURL}} -i {{chainID}}
