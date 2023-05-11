@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
 import type { Metrics, ReturnedMetric } from "../lib/types.ts";
-import { utils } from "https://esm.sh/ethers@5.7.2?dts";
+import { utils, BigNumberish } from "https://esm.sh/ethers@5.7.2?dts";
 
 const ggAVAXDashboard: Metrics[] = [
   {
@@ -123,6 +123,26 @@ const ggAVAXDashboard: Metrics[] = [
       },
     },
   },
+  {
+    type: "contract",
+    metric: {
+      source: "eth",
+      contract: "TokenggAVAX",
+      method: "previewDeposit",
+      args: [utils.parseUnits("1.0")],
+      title: "ggAVAX Exchange Rate",
+      desc: "The amount of ggAVAX you will receive for 1 AVAX",
+      name: "ggavaxAvaxExchangeRate",
+      formatter: (m: Metrics, value: BigNumberish) => {
+        return {
+          name: m.metric.name,
+          title: m.metric.title,
+          desc: m.metric.desc,
+          value: parseFloat(utils.formatEther(value)),
+        };
+      }
+    }
+  }
 ];
 
 export default ggAVAXDashboard;
