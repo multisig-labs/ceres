@@ -1,0 +1,815 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_GRAFANACLOUD-MULTISIGLABS-PROM",
+      "label": "grafanacloud-multisiglabs-prom",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__elements": {
+    "b92d4aa4-fd7c-4814-a8a1-df76c2851f5f": {
+      "name": "Protocol TVL",
+      "uid": "b92d4aa4-fd7c-4814-a8a1-df76c2851f5f",
+      "kind": 1,
+      "model": {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "grafanacloud-prom"
+        },
+        "description": "Total value locked in the protocol, in USD.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "currencyUSD"
+          },
+          "overrides": []
+        },
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "textMode": "auto"
+        },
+        "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "grafanacloud-prom"
+            },
+            "editorMode": "code",
+            "expr": "((total_assets + ignoring(status) (minipools_status_staking * 1000)) * avax_price) + (total_ggp_stake * ggp_price_in_avax * avax_price)",
+            "format": "time_series",
+            "legendFormat": "__auto",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "Protocol TVL",
+        "type": "stat"
+      }
+    },
+    "cf454480-6157-4d31-9e4b-96d3a4a09bd1": {
+      "name": "Themes",
+      "uid": "cf454480-6157-4d31-9e4b-96d3a4a09bd1",
+      "kind": 1,
+      "model": {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "grafanacloud-prom"
+        },
+        "description": "Select your prefered theme",
+        "libraryPanel": {
+          "name": "Themes",
+          "uid": ""
+        },
+        "options": {
+          "activeTheme": "GGP Theme",
+          "themes": [
+            {
+              "name": "GGP Theme",
+              "styles": [
+                {
+                  "props": {
+                    "theme": "default"
+                  },
+                  "type": "basetheme"
+                },
+                {
+                  "props": {
+                    "url": ""
+                  },
+                  "type": "bgimage"
+                },
+                {
+                  "props": {
+                    "url": "https://fonts.googleapis.com/css2?family=Jost:wght@300;500;700;800&display=swap\" rel=\"stylesheet\""
+                  },
+                  "type": "url"
+                },
+                {
+                  "props": {
+                    "text": "\nbody {\nbackground-color: #23202E;\ncolor: #fff;\nfont-family: 'Jost', sans-serif;\n}\n\n.markdown-html a {\ncolor: #B7AFF8;\n}\n\nh1,h2,h3,h4,h5,h6 {\nfont-family: 'Jost', sans-serif;\n}\n\nh1 {\nfont-size: 20px;\npadding: 0.5em 0.5em 0.4em 0.5em;\nbackground-color: rgba(0,0,0,0.2);\nmargin: 1em 0;\ntext-align: center;\ntext-transform: uppercase;\nletter-spacing: 5px;\n}\n\n\nh2 {\nfont-size: 18px;\nfont-weight: bold;\ntext-transform: uppercase;\nletter-spacing: 3px;\ncolor: #686080;\n}\n\n\n.css-85us1i-panel-container {\nbackground-color: #353141;\nborder-radius: 24px;\nbox-shadow: 0px 10px 30px rgba(0, 0, 0, 0.05);\n}\n\n.grid-drag-handle {\nheight: auto!important;\npadding: 10px 14px;\n\n}\n\n\n.grid-drag-handle  h6 {\nfont-size: 1.2em;\nfont-weight: bold;\ntext-transform: uppercase;\nletter-spacing: 2px;\ncolor: #686080;\n}\n\n.btn {\nborder-radius: 30px;\npadding: 1em 2em;\nheight: auto;\nbackground-color: #49E988;\ncolor: rgba(0,0,0,1);\n}\n\na.btn {\ncolor: #000;\n}\n\n.btn--main-cta {\nmargin: 0 auto;\nwidth: 100%;\nmax-width: 340px;\ndisplay: block;\n}\n\n.btn.btn-secondary{\nbackground-color: #6B61D6;\ncolor: #fff;\nbackground-image: none;\n}\n.btn.btn-secondary:hover{\nbackground-color: #433C82;\n}\n\n.markdown-html ul {\npadding: 0;\n}\n\nul {\nlist-style: none;\npadding: 0;\npadding-left: 0;\n}\n\nul li {\nborder-bottom: 1px dotted rgba(255,255,255,0.3);\npadding: 1em;\n}"
+                  },
+                  "type": "style"
+                }
+              ]
+            }
+          ]
+        },
+        "pluginVersion": "0.2.1",
+        "title": "Themes",
+        "type": "yesoreyeram-boomtheme-panel",
+        "targets": [
+          {
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "grafanacloud-prom"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.5.2-cloud.1.f9fd074b"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 24,
+      "libraryPanel": {
+        "uid": "b92d4aa4-fd7c-4814-a8a1-df76c2851f5f",
+        "name": "Protocol TVL"
+      }
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "description": "Total circulating ggAVAX value in USD\n\nformula: circulating ggAVAX * AVAX price in USD\n\nfunction: TokenggAVAX.totalAssets() ",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 12,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "(total_assets / ggavax_avax_exchange_rate) * avax_price",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "Total Assets"
+        }
+      ],
+      "title": "Circulating ggAVAX Value",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "description": "The amount of liquid staking funds staked on a minipool and validating on chain, is USD.\n\nformula: stakingTotalAssets * AVAX price in USD\n\nFunction: ggAVAX.stakingTotalAssets()",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 8
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "total_avax_liq_staker_amt * avax_price",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Liquid Staker AVAX Validating",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "description": "Total GGP staked in the protocol\n\nfunction: staking.getTotalGGPStake()",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 6,
+        "y": 8
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "total_ggp_stake * avax_price * ggp_price_in_avax",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "GGP Staked",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "description": "AVAX ready to be staked on minipools, in USD.\n\nformula: amountAvailableForStaking * AVAX price in USD\n\nfunction: ggAVAX.amountAvailableForStaking()",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 12,
+        "y": 8
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "amount_available_for_staking * avax_price",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Amount Available For Staking",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "description": "The amount of rewards distributed in the most recent cycle, in USD.\n\nformula: lastRewardsAmt * AVAX price in USD\n\nfunction: ggAVAX.lastRewardsAmt variable",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 18,
+        "y": 8
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "(last_rewards_amt / ggavax_avax_exchange_rate) * avax_price",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Last Rewards Value for ggAVAX",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "dateTimeAsIso"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 14
+      },
+      "id": 20,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "ggp_price_update_time * 1000",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Last GGP<->AVAX Update Time",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 6,
+        "y": 14
+      },
+      "id": 16,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "ggp_price_in_avax * avax_price",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "GGP <-> USD",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": null
+              }
+            ]
+          },
+          "unit": "AVAX"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 12,
+        "y": 14
+      },
+      "id": 22,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "ggp_price_in_avax",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "GGP <-> AVAX",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 18,
+        "y": 14
+      },
+      "id": 21,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "avax_price",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "AVAX <-> USD",
+      "type": "stat"
+    },
+    {
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 18,
+        "y": 20
+      },
+      "id": 26,
+      "libraryPanel": {
+        "uid": "cf454480-6157-4d31-9e4b-96d3a4a09bd1",
+        "name": "Themes"
+      }
+    }
+  ],
+  "refresh": "",
+  "revision": 1,
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Finance Dash (USD)",
+  "uid": "deb05e25-79ec-4048-af44-5ba60d182022",
+  "version": 14,
+  "weekStart": ""
+}
