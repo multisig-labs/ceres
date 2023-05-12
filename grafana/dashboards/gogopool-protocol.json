@@ -1,0 +1,1712 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_GRAFANACLOUD-MULTISIGLABS-PROM",
+      "label": "grafanacloud-multisiglabs-prom",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__elements": {
+    "cf454480-6157-4d31-9e4b-96d3a4a09bd1": {
+      "name": "Themes",
+      "uid": "cf454480-6157-4d31-9e4b-96d3a4a09bd1",
+      "kind": 1,
+      "model": {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "grafanacloud-prom"
+        },
+        "description": "Select your prefered theme",
+        "libraryPanel": {
+          "name": "Themes",
+          "uid": ""
+        },
+        "options": {
+          "activeTheme": "GGP Theme",
+          "themes": [
+            {
+              "name": "GGP Theme",
+              "styles": [
+                {
+                  "props": {
+                    "theme": "default"
+                  },
+                  "type": "basetheme"
+                },
+                {
+                  "props": {
+                    "url": ""
+                  },
+                  "type": "bgimage"
+                },
+                {
+                  "props": {
+                    "url": "https://fonts.googleapis.com/css2?family=Jost:wght@300;500;700;800&display=swap\" rel=\"stylesheet\""
+                  },
+                  "type": "url"
+                },
+                {
+                  "props": {
+                    "text": "\nbody {\nbackground-color: #23202E;\ncolor: #fff;\nfont-family: 'Jost', sans-serif;\n}\n\n.markdown-html a {\ncolor: #B7AFF8;\n}\n\nh1,h2,h3,h4,h5,h6 {\nfont-family: 'Jost', sans-serif;\n}\n\nh1 {\nfont-size: 20px;\npadding: 0.5em 0.5em 0.4em 0.5em;\nbackground-color: rgba(0,0,0,0.2);\nmargin: 1em 0;\ntext-align: center;\ntext-transform: uppercase;\nletter-spacing: 5px;\n}\n\n\nh2 {\nfont-size: 18px;\nfont-weight: bold;\ntext-transform: uppercase;\nletter-spacing: 3px;\ncolor: #686080;\n}\n\n\n.css-85us1i-panel-container {\nbackground-color: #353141;\nborder-radius: 24px;\nbox-shadow: 0px 10px 30px rgba(0, 0, 0, 0.05);\n}\n\n.grid-drag-handle {\nheight: auto!important;\npadding: 10px 14px;\n\n}\n\n\n.grid-drag-handle  h6 {\nfont-size: 1.2em;\nfont-weight: bold;\ntext-transform: uppercase;\nletter-spacing: 2px;\ncolor: #686080;\n}\n\n.btn {\nborder-radius: 30px;\npadding: 1em 2em;\nheight: auto;\nbackground-color: #49E988;\ncolor: rgba(0,0,0,1);\n}\n\na.btn {\ncolor: #000;\n}\n\n.btn--main-cta {\nmargin: 0 auto;\nwidth: 100%;\nmax-width: 340px;\ndisplay: block;\n}\n\n.btn.btn-secondary{\nbackground-color: #6B61D6;\ncolor: #fff;\nbackground-image: none;\n}\n.btn.btn-secondary:hover{\nbackground-color: #433C82;\n}\n\n.markdown-html ul {\npadding: 0;\n}\n\nul {\nlist-style: none;\npadding: 0;\npadding-left: 0;\n}\n\nul li {\nborder-bottom: 1px dotted rgba(255,255,255,0.3);\npadding: 1em;\n}"
+                  },
+                  "type": "style"
+                }
+              ]
+            }
+          ]
+        },
+        "pluginVersion": "0.2.1",
+        "title": "Themes",
+        "type": "yesoreyeram-boomtheme-panel",
+        "targets": [
+          {
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "grafanacloud-prom"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.5.2-cloud.1.f9fd074b"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "description": "",
+      "gridPos": {
+        "h": 19,
+        "w": 5,
+        "x": 0,
+        "y": 0
+      },
+      "id": 17,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<a href=\"https://app.gogopool.com\" class=\"btn btn--main-cta\">Go to Gogopool</a>\n\n<h2>Token Contracts</h2>\n\n<ul>\n  <li>\n    <a target=\"_blank\" href=\"https://snowtrace.io/token/0x69260B9483F9871ca57f81A90D91E2F96c2Cd11d\">GGP</a>\n  </li>\n  <li>\n    <a target=\"_blank\" href=\"https://snowtrace.io/token/0xa25eaf2906fa1a3a13edac9b9657108af7b703e3\">ggAVAX</a>\n  </li>\n</ul>\n\n\n<h2>Links</h2>\n<ul>\n  <li>\n<a target=\"_blank\" href=\"https://panopticon.fly.dev/home\">Panopticon</a>\n</li>\n  <li>\n<a target=\"_blank\" href=\"https://dexscreener.com/avalanche/0xae671e0bf91ceaa4a6cb0d1294735ea3236d4586\">DexScreener</a>\n </li>\n <li>\n <a target=\"_blank\" href=\"https://www.coingecko.com/en/coins/gogopool\">CoinGecko</a>\n </li>\n</ul>\n",
+        "mode": "markdown"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 5,
+        "y": 0
+      },
+      "id": 27,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "((total_assets + ignoring(status) (minipools_status_staking * 1000)) * avax_price) + (total_ggp_stake * ggp_price_in_avax * avax_price)",
+          "format": "time_series",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Protocol TVL",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "description": "",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 11,
+        "y": 0
+      },
+      "id": 28,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<h1 class=\"apr\">5.79%</h1>  ",
+        "mode": "html"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "title": "Liquid Staking APR",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "description": "APR is calculated as a combination of AVAX staking  rewards plus GGP staking rewards paid out monthly. GGP rewards are a fixed amount each month that is split pro-rata between all eligible GGP stakers.",
+      "gridPos": {
+        "h": 8,
+        "w": 7,
+        "x": 17,
+        "y": 0
+      },
+      "id": 29,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<h1 class=\"apr\">375% -- 2,500%</h1>",
+        "mode": "html"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "title": "NodeOp APR",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "description": "amount_available_for_staking\n\nfunction: TokenggAVAX.amountAvailableForStaking() ",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#8c65ff",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 5,
+        "y": 8
+      },
+      "id": 12,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "(amount_available_for_staking / 1000) - 1",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "Total Assets"
+        }
+      ],
+      "title": "Available Minipools",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "description": "Total minipools with status = staking",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 9,
+        "y": 8
+      },
+      "id": 26,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "minipools_status_staking    ",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Active Minipools",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "description": "Total GGP staked in the protocol\n\nfunction: staking.getTotalGGPStake()",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#8c65ff",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 5,
+        "x": 13,
+        "y": 8
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "total_ggp_stake{}",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "GGP Staked",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 18,
+        "y": 8
+      },
+      "id": 16,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "ggp_price_in_avax * avax_price",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "GGP Price",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "description": "In your local timezone",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#9790cc",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "dateTimeAsLocal"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 5,
+        "y": 14
+      },
+      "id": 23,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "valueSize": 25
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(rewards_cycle_seconds) * 1000",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Reward Cycle Start",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "description": "At least one of your minipool's must have been started before this time in order to be eligible for this GGP rewards cycle.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "yellow",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "dateTimeAsLocal"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 7,
+        "x": 11,
+        "y": 14
+      },
+      "id": 30,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "valueSize": 35
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "(rewards_cycle_seconds + 2592000 - rewards_eligibility_min_seconds) * 1000",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Rewards Eligibility",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "description": "In your local timezone",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#9790cc",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "dateTimeAsLocal"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 14
+      },
+      "id": 22,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "valueSize": 25
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(rewards_cycle_seconds + 2592000) * 1000",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Reward Cycle End",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#8c65ff",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 19,
+        "x": 5,
+        "y": 18
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "sum(minipools_status_cancelled)",
+          "hide": false,
+          "legendFormat": "Cancelled",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "sum(minipools_status_error)",
+          "hide": false,
+          "legendFormat": "Errors",
+          "range": true,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "sum(minipools_status_finished)",
+          "hide": false,
+          "legendFormat": "Finished",
+          "range": true,
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "sum(minipools_status_withdrawable)",
+          "hide": false,
+          "legendFormat": "Widthdrawable",
+          "range": true,
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "sum(minipools_status_launched)",
+          "hide": false,
+          "legendFormat": "Launched",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "sum(minipools_status_prelaunch)",
+          "hide": false,
+          "legendFormat": "PreLaunch",
+          "range": true,
+          "refId": "F"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "sum(minipools_status_staking)",
+          "hide": false,
+          "legendFormat": "Staking",
+          "range": true,
+          "refId": "G"
+        }
+      ],
+      "title": "Minipools",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Parameter Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 254
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 184
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 5,
+        "x": 0,
+        "y": 19
+      },
+      "id": 24,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "total_avax_liq_staker_amt",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "total_assets",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "last_sync",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "last_rewards_amt",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "total_released_assets",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "staking_total_assets",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "F"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "amount_available_for_staking",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "G"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "staker_count",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "H"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "total_ggp_stake",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "I"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "rewards_eligibility_min_seconds",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "J"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "rewards_cycle_seconds",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "K"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "inflation_interval_rate",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "L"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "inflation_interval_seconds",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "M"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "minipool_min_avax_staking_amt",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "N"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "minipool_node_commission_fee_pct",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "O"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "minipool_max_avax_assignment",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "P"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "minipool_min_avax_assignment",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "Q"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "expected_avax_rewards_rate",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "R"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "max_collateralization_ratio",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "S"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "min_collateralization_ratio",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "T"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "target_ggavax_reserve_rate",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "U"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "ggp_price_in_avax",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "V"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "ggp_price_update_time",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "W"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "can_start_rewards_cycle",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "X"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "reward_cycle_elapsed",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "Y"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "reward_cycle_total_amt",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "Z"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "inflation_interval_start_time",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "AA"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "inflation_intervals_elapsed",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "AB"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "inflation_amt",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "AC"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "claiming_contract_distribution_node_op",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "AD"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "claiming_contract_distribution_protocol_dao",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "AE"
+        }
+      ],
+      "title": "Protocol Parameters",
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {
+            "keepLabels": [
+              "__name__"
+            ]
+          }
+        },
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "Time": 2,
+              "Value": 1,
+              "__name__": 0
+            },
+            "renameByName": {
+              "Time": "Last Check Time",
+              "__name__": "Parameter Name"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "field": "Parameter Name"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "description": "The amount of rewards distributed in a the most recent cycle\n\nfunction: ggAVAX.lastRewardsAmt variable",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#8c65ff",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ggAVAX"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 5,
+        "y": 23
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "expr": "last_rewards_amt",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "ggAVAX Last Rewards",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#9790cc",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "dateTimeAsIso"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 3,
+        "x": 11,
+        "y": 23
+      },
+      "id": 18,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "last_sync * 1000",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Last Sync Time",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#9790cc",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "dateTimeAsIso"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 5,
+        "x": 14,
+        "y": 23
+      },
+      "id": 20,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2-cloud.1.f9fd074b",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MULTISIGLABS-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "ggp_price_update_time * 1000",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Last GGP<->AVAX Update Time",
+      "type": "stat"
+    },
+    {
+      "gridPos": {
+        "h": 6,
+        "w": 5,
+        "x": 19,
+        "y": 23
+      },
+      "id": 25,
+      "libraryPanel": {
+        "uid": "cf454480-6157-4d31-9e4b-96d3a4a09bd1",
+        "name": "Themes"
+      }
+    }
+  ],
+  "refresh": "",
+  "revision": 1,
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-7d",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "browser",
+  "title": "GoGoPool Protocol",
+  "uid": "bc0a866d-4902-48c9-9482-070a04b3c3c7",
+  "version": 18,
+  "weekStart": "monday"
+}
