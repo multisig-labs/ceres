@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
 import type { Metrics, ReturnedMetric } from "../lib/types.ts";
-import { utils, BigNumberish } from "https://esm.sh/ethers@5.7.2?dts";
+import { BigNumberish, utils } from "https://esm.sh/ethers@5.7.2?dts";
 
 const ggAVAXDashboard: Metrics[] = [
   {
@@ -140,9 +140,9 @@ const ggAVAXDashboard: Metrics[] = [
           desc: m.metric.desc,
           value: parseFloat(utils.formatEther(value)),
         };
-      }
-    }
-  }
+      },
+    },
+  },
 ];
 
 export default ggAVAXDashboard;
