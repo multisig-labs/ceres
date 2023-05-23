@@ -3,9 +3,9 @@ import { calculatePercentChange } from "../lib/percentChange.ts";
 
 const metrics = {
 	tvlPercentChange: "((total_assets + ignoring(status) (minipools_status_staking * 1000)) * avax_price) + (total_ggp_stake * ggp_price_in_avax * avax_price)",
-	liquidStakingPercentChange: "(total_assets / ggavax_avax_exchange_rate) * avax_price",
+	liquidStakingPercentChange: "(total_assets / ggavax_avax_exchange_rate)",
 	ggpPercentChange: "ggp_price_in_avax * avax_price",
-	ggpStakePercentChange: "total_ggp_stake * avax_price * ggp_price_in_avax",
+	ggpStakePercentChange: "total_ggp_stake * ggp_price_in_avax",
 	totalMinipoolsPercentChange: "sum(minipools_status_launched) + sum(minipools_status_staking) + sum(minipools_status_prelaunch) + sum(minipools_status_finished) + sum(minipools_status_withdrawable) + sum(minipools_status_cancelled) + sum(minipools_status_error)",
 }
 
