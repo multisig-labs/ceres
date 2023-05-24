@@ -1,8 +1,219 @@
 modules:
   default:
     metrics:
-      - name: total_ggavax_assets
+      - name: minipools_status_finished
+        path: "{ .minipoolsFinished.value }"
+        help: "Finished minipools"
+        labels:
+          status: "finished"
+      - name: minipools_status_prelaunch
+        path: "{ .minipoolsPrelaunch.value }"
+        help: "Prelaunch minipools"
+        labels:
+          status: "prelaunch"
+      - name: minipools_status_launched
+        path: "{ .minipoolsLaunched.value }"
+        help: "Launched minipools"
+        labels:
+          status: "launched"
+      - name: minipools_status_staking
+        path: "{ .minipoolsStaking.value }"
+        help: "Staking minipools"
+        labels:
+          status: "staking"
+      - name: minipools_status_withdrawable
+        path: "{ .minipoolsWithdrawable.value }"
+        help: "Withdrawable minipools"
+        labels:
+          status: "withdrawable"
+      - name: minipools_status_cancelled
+        path: "{ .minipoolsCanceled.value }"
+        help: "Cancelled minipools"
+        labels:
+          status: "cancelled"
+      - name: minipools_status_error
+        path: "{ .minipoolsError.value }"
+        help: "Error minipools"
+        labels:
+          status: "error"
+      - name: total_avax_liq_staker_amt
+        path: "{ .totalAVAXLiquidStakerAmt.value }"
+        help: "Total AVAX liquid staker amount"
+      - name: total_assets
         path: "{ .totalAssets.value }"
         help: "Total ggAVAX assets"
+      - name: last_sync
+        path: "{ .lastSync.value }"
+        help: "The effective start of the last cycle"
+      - name: last_rewards_amt
+        path: "{ .lastRewardsAmt.value }"
+        help: "The amount of rewards distributed in the last cycle"
+      - name: total_released_assets
+        path: "{ .totalReleasedAssets.value }"
+        help: "Total released assets"
+      - name: staking_total_assets
+        path: "{ .stakingTotalAssets.value }"
+        help: "Total staking assets"
+      - name: amount_available_for_staking
+        path: "{ .amountAvailableForStaking.value }"
+        help: "Amount available for staking"
+      - name: staker_count
+        path: "{ .stakerCount.value }"
+        help: "Number of stakers"
+      - name: total_ggp_stake
+        path: "{ .totalGGPStake.value }"
+        help: "Total GGP stake"
+      - name: rewards_eligibility_min_seconds
+        path: "{ .rewardsEligibilityMinSeconds.value }"
+        help: "Rewards eligibility min seconds"
+      - name: rewards_cycle_seconds
+        path: "{ .rewardsCycleSeconds.value }"
+        help: "Rewards cycle seconds"
+      - name: inflation_interval_rate
+        path: "{ .inflationIntervalRate.value }"
+        help: "Inflation interval rate"
+      - name: inflation_interval_seconds
+        path: "{ .inflationIntervalSeconds.value }"
+        help: "Inflation interval seconds"
+      - name: minipool_min_avax_staking_amt
+        path: "{ .minipoolMinAVAXStakingAmt.value }"
+        help: "The minimum amount of AVAX a minipool must stake"
+      - name: minipool_node_commission_fee_pct
+        path: "{ .minipoolNodeCommisionFeePct.value }"
+        help: "The commission fee a node receives for operating a minipool"
+      - name: minipool_max_avax_assignment
+        path: "{ .minipoolMaxAVAXAssignment.value }"
+        help: "The maximum amount of AVAX a minipool can be assigned"
+      - name: minipool_min_avax_assignment
+        path: "{ .minipoolMinAVAXAssignment.value }"
+        help: "The minimum amount of AVAX a minipool can be assigned"
+      - name: expected_avax_rewards_rate
+        path: "{ .expectedAVAXRewardRate.value }"
+        help: "The expected rate of AVAX rewards"
+      - name: max_collateralization_ratio
+        path: "{ .maxCollateralizationRatio.value }"
+        help: "The maximum collateralization ratio for a minipool"
+      - name: min_collateralization_ratio
+        path: "{ .minCollateralizationRatio.value }"
+        help: "The minimum collateralization ratio for a minipool"
+      - name: target_ggavax_reserve_rate
+        path: "{ .targetGGAVAXReserveRate.value }"
+        help: "The target GGAVAX reserve rate"
+      - name: ggp_price_in_avax
+        path: "{ .ggpPriceInAVAX.value }"
+        help: "The price of GGP in AVAX"
+      - name: ggp_price_update_time
+        path: "{ .ggpPriceUpdateTime.value }"
+        help: "The time of the last GGP price update"
+      - name: can_start_rewards_cycle
+        path: "{ .canStartRewardsCycle.value }"
+        help: "Whether a rewards cycle can be started"
+      - name: reward_cycle_elapsed
+        path: "{ .rewardsCyclesElapsed.value }"
+        help: "The number of reward cycles elapsed"
+      - name: reward_cycle_total_amt
+        path: "{ .rewardCycleTotalAmt.value }"
+        help: "The total amount of rewards distributed in the current cycle"
+      - name: inflation_interval_start_time
+        path: "{ .inflationIntervalStartTime.value }"
+        help: "The start time of the current inflation interval"
+      - name: inflation_intervals_elapsed
+        path: "{ .inflationIntervalsElapsed.value }"
+        help: "The number of inflation intervals elapsed"
+      - name: inflation_amt
+        path: "{ .inflationAmt.value }"
+        help: "The amount of inflation distributed in the current interval"
+      - name: claiming_contract_distribution_node_op
+        path: "{ .claimingContractDistributionNodeOp.value }"
+        help: "The claiming contract distribution node op"
+      - name: claiming_contract_distribution_protocol_dao
+        path: "{ .claimingContractDistributionProtocolDAO.value }"
+        help: "The claiming contract distribution protocol DAO"
+      - name: rialto_peers
+        path: "{ .rialtoPeers.value }"
+        help: "The number of Rialto peers"
+      - name: orc_online
+        path: "{ .orcOnline.value }"
+        help: "Whether the rialto orchestrator is online"
+      - name: rialto_john_up
+        path: "{ .RialtoJohnUp.value }"
+        help: "Whether or not Rialto John is up"
         labels:
-          asset: "ggAVAX"
+          version: "{ .RialtoJohnVersion.value }"
+      - name: rialto_julie_up
+        path: "{ .RialtoJulieUp.value }"
+        help: "Whether or not Rialto Julie is up"
+        labels:
+          version: "{ .RialtoJulieVersion.value }"
+      - name: rialto_emerson_up
+        path: "{ .RialtoEmersonUp.value }"
+        help: "Whether or not Rialto Emerson is up"
+        labels:
+          version: "{ .RialtoEmersonVersion.value }"
+      - name: rialto_chandler_up
+        path: "{ .RialtoChandlerUp.value }"
+        help: "Whether or not Rialto Chandler is up"
+        labels:
+          version: "{ .RialtoChandlerVersion.value }"
+      - name: rialto_cam_up
+        path: "{ .RialtoCamUp.value }"
+        help: "Whether or not Rialto Cam is up"
+        labels:
+          version: "{ .RialtoCamVersion.value }"
+      - name: rialto_john_quorum
+        path: "{ .RialtoJohnQuorum.value }"
+        help: "Whether or not Rialto John is in quorum"
+      - name: rialto_julie_quorum
+        path: "{ .RialtoJulieQuorum.value }"
+        help: "Whether or not Rialto Julie is in quorum"
+      - name: rialto_emerson_quorum
+        path: "{ .RialtoEmersonQuorum.value }"
+        help: "Whether or not Rialto Emerson is in quorum"
+      - name: rialto_chandler_quorum
+        path: "{ .RialtoChandlerQuorum.value }"
+        help: "Whether or not Rialto Chandler is in quorum"
+      - name: rialto_cam_quorum
+        path: "{ .RialtoCamQuorum.value }"
+        help: "Whether or not Rialto Cam is in quorum"
+      - name: p_chain_balance
+        path: "{ .PBalance.value }"
+        help: "The balance of the P-Chain wallet"
+      - name: c_chain_balance
+        path: "{ .CBalance.value }"
+        help: "The balance of the C-Chain wallet"
+      - name: avax_price
+        path: "{ .avaxPrice.value }"
+        help: "The price of AVAX in USD"
+      - name: ggavax_avax_exchange_rate
+        path: "{ .ggavaxAvaxExchangeRate.value }"
+        help: "The exchange rate of avax to ggavax"
+      - name: tvl_percent_change_month
+        path: "{ .tvlPercentChangeMonth.value }"
+        help: "The percent change in TVL over the last month"
+      - name: tvl_percent_change_week
+        path: "{ .tvlPercentChangeWeek.value }"
+        help: "The percent change in TVL over the last week"
+      - name: liquid_staking_percent_change_month
+        path: "{ .liquidStakingPercentChangeMonth.value }"
+        help: "The percent change in liquid staking over the last month"
+      - name: liquid_staking_percent_change_week
+        path: "{ .liquidStakingPercentChangeWeek.value }"
+        help: "The percent change in liquid staking over the last week"
+      - name: ggp_percent_change_month
+        path: "{ .ggpPercentChangeMonth.value }"
+        help: "The percent change in GGP over the last month"
+      - name: ggp_percent_change_week
+        path: "{ .ggpPercentChangeWeek.value }"
+        help: "The percent change in GGP over the last week"
+      - name: ggp_stake_percent_change_month
+        path: "{ .ggpStakePercentChangeMonth.value }"
+        help: "The percent change in GGP staked amount over the last month"
+      - name: ggp_stake_percent_change_week
+        path: "{ .ggpStakePercentChangeWeek.value }"
+        help: "The percent change in GGP staked amount over the last week"
+      - name: total_minipools_percent_change_month
+        path: "{ .totalMinipoolsPercentChangeMonth.value }"
+        help: "The percent change in total minipools over the last month"
+      - name: total_minipools_percent_change_week
+        path: "{ .totalMinipoolsPercentChangeWeek.value }"
+        help: "The percent change in total minipools over the last week"

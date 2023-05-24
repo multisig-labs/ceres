@@ -5,7 +5,7 @@ default:
     just --list
 
 # copies the contracts.json file from the specified hardhat artifacts directory
-copy-contracts artifacts="../gogopool-private/artifacts":
+copy-contracts artifacts="../gogopool/artifacts":
     #!/usr/bin/env bash
     set -euo pipefail
     mkdir -p config
@@ -132,3 +132,20 @@ add mode="dashboard" name="":
 
 updateAddrs storageAddr="0x1cEa17F9dE4De28FeB6A102988E12D4B90DfF1a9" rpcURL="https://api.avax.network/ext/bc/C/rpc" chainID="43114":
   deno run --unstable --allow-net --allow-read=config scripts/updateAddresses.ts -a {{storageAddr}} -u {{rpcURL}} -i {{chainID}}
+
+dev-setup:
+  #!/bin/bash
+  # if config doesnt exist, copy it from the example folder
+  if [ ! -d config ]; then
+    cp examples/config config
+  fi
+  # if ../gogopool isnt cloned, clone it
+  if [ ! -d ../gogopool ]; then
+    git clone https://github.com/multisig-labs/gogopool.git ../gogopool
+  fi
+  cd ../gogopool
+  yarn
+  just build
+  cd ../ceres
+  just copy-contracts
+  echo "Setup nearly complete. See Notion for next steps."
