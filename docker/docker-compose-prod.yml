@@ -39,3 +39,14 @@ services:
       - ../config:/etc/prometheus
       - ../data/prometheus:/prometheus
     user: "${UID:-0}:${GID:-0}"
+
+  caddy:
+    container_name: caddy
+    image: caddy:alpine
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ../config/Caddyfile:/etc/caddy/Caddyfile
+      - ../data/caddy:/data
