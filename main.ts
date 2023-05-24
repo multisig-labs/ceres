@@ -107,7 +107,23 @@ const gatherDashboards = async (
 const serveHTTP = async (conn: Deno.Conn) => {
   const httpConn = Deno.serveHttp(conn);
   for await (const requestEvent of httpConn) {
+    // check if the filter query param is set
+    const url = new URL(requestEvent.request.url);
+    const filter = url.searchParams.get("filter");
     const results = await gatherDashboards(concurrentRequests);
+    if (filter) {
+      const filters = filter.split(",");
+      // case insensitive. if the key contains the filter, return it
+      Object.keys(results).forEach((key) => {
+        const lowerKey = key.toLowerCase();
+        filters.forEach((filter) => {
+          const lowerFilter = filter.toLowerCase();
+          if (lowerKey.includes(lowerFilter)) {
+            delete results[key];
+          }
+        });
+      });
+    }
     requestEvent.respondWith(
       new Response(JSON.stringify(results), {
         status: 200,
