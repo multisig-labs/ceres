@@ -7,6 +7,7 @@ const metrics = {
 	ggpPercentChange: "ggp_price_in_avax * avax_price",
 	ggpStakePercentChange: "total_ggp_stake * ggp_price_in_avax",
 	totalMinipoolsPercentChange: "sum(minipools_status_launched) + sum(minipools_status_staking) + sum(minipools_status_prelaunch) + sum(minipools_status_finished) + sum(minipools_status_withdrawable) + sum(minipools_status_cancelled) + sum(minipools_status_error)",
+  effectiveGGPStakePercentChange: "effective_ggp_stake * ggp_price_in_avax",
 }
 
 interface percentChangeMetric {
@@ -89,6 +90,20 @@ const percentChangeMetrics: percentChangeMetric[] = [
     timeFrame: "week",
     query: metrics.totalMinipoolsPercentChange,
   },
+  // {
+  //   name: "effectiveGGPStakePercentChangeMonth",
+  //   title: "Effective GGP Stake Percent Change (Month)",
+  //   desc: "The percent change in effective GGP stake over the last month",
+  //   timeFrame: "month",
+  //   query: metrics.effectiveGGPStakePercentChange,
+  // },
+  // {
+  //   name: "effectiveGGPStakePercentChangeWeek",
+  //   title: "Effective GGP Stake Percent Change (Week)",
+  //   desc: "The percent change in effective GGP stake over the last week",
+  //   timeFrame: "week",
+  //   query: metrics.effectiveGGPStakePercentChange,
+  // },
 ]
 
 const PercentChangeDashboard: Metrics[] = percentChangeMetrics.map((m) => {
