@@ -14,9 +14,17 @@ Ceres is the Roman god of harvest.
 
 ## Prerequisites
 
-- [Deno](https://deno.land/)
-- [Just](https://just.systems/man/en/)
-- [Docker](https://www.docker.com/)
+* [Deno](https://deno.land/)
+* [Just](https://just.systems/man/en/)
+* [Docker](https://www.docker.com/)
+
+## Getting Started
+
+```sh
+git clone https://github.com/multisig-labs/ceres.git
+cd ceres
+just dev-setup
+```
 
 ## Available Just Recipes
 
