@@ -33,7 +33,7 @@ const fetchMetrics = async (query: string, start: Date, end: Date) => {
   params.set("query", query);
   params.set("start", Math.floor(start.getTime() / 1000).toString());
   params.set("end", Math.floor(end.getTime() / 1000).toString());
-  params.set("step", "1d"); // this may need changed
+  params.set("step", "12h"); // this may need changed
 
   const headers = new Headers();
   if (PROMETHEUS_USER && PROMETHEUS_PASSWORD) {

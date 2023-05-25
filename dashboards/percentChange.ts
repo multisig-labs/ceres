@@ -90,20 +90,20 @@ const percentChangeMetrics: percentChangeMetric[] = [
     timeFrame: "week",
     query: metrics.totalMinipoolsPercentChange,
   },
-  // {
-  //   name: "effectiveGGPStakePercentChangeMonth",
-  //   title: "Effective GGP Stake Percent Change (Month)",
-  //   desc: "The percent change in effective GGP stake over the last month",
-  //   timeFrame: "month",
-  //   query: metrics.effectiveGGPStakePercentChange,
-  // },
-  // {
-  //   name: "effectiveGGPStakePercentChangeWeek",
-  //   title: "Effective GGP Stake Percent Change (Week)",
-  //   desc: "The percent change in effective GGP stake over the last week",
-  //   timeFrame: "week",
-  //   query: metrics.effectiveGGPStakePercentChange,
-  // },
+  {
+    name: "effectiveGGPStakePercentChangeMonth",
+    title: "Effective GGP Stake Percent Change (Month)",
+    desc: "The percent change in effective GGP stake over the last month",
+    timeFrame: "month",
+    query: metrics.effectiveGGPStakePercentChange,
+  },
+  {
+    name: "effectiveGGPStakePercentChangeWeek",
+    title: "Effective GGP Stake Percent Change (Week)",
+    desc: "The percent change in effective GGP stake over the last week",
+    timeFrame: "week",
+    query: metrics.effectiveGGPStakePercentChange,
+  },
 ]
 
 const PercentChangeDashboard: Metrics[] = percentChangeMetrics.map((m) => {
