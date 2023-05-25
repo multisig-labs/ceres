@@ -78,10 +78,15 @@ const fetchMetrics = async (query: string, start: Date, end: Date) => {
   return finalData;
 };
 
-export const calculatePercentChange = async (timeFrame: "week" | "month", metric: string) => {  			
+export const calculatePercentChange = async (
+  timeFrame: "week" | "month",
+  metric: string,
+) => {
   // get the start and end dates
   const end = new Date();
-  const start = timeFrame === "week" ? new Date(end.getTime() - 604800000) : new Date(end.getTime() - 2592000000);
+  const start = timeFrame === "week"
+    ? new Date(end.getTime() - 604800000)
+    : new Date(end.getTime() - 2592000000);
 
   const resp = await fetchMetrics(metric, start, end);
 
@@ -93,4 +98,4 @@ export const calculatePercentChange = async (timeFrame: "week" | "month", metric
   const percentChange = ((lastValue - firstValue) / firstValue) * 100;
 
   return percentChange;
-}
+};

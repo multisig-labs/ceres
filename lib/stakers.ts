@@ -1,4 +1,8 @@
-import { Contract, providers, BigNumber } from "https://esm.sh/ethers@5.7.2?dts";
+import {
+  BigNumber,
+  Contract,
+  providers,
+} from "https://esm.sh/ethers@5.7.2?dts";
 
 import loadConfig from "./loadConfig.ts";
 import { stakerTransformer } from "./utils/transformers.js";
@@ -46,4 +50,4 @@ export const getEffectiveGGPStake = async () => {
   });
 
   return totalStake;
-}
+};

@@ -1,8 +1,7 @@
 import { BigNumber, utils } from "https://esm.sh/ethers@5.7.2?dts";
 
 import type { Metrics, ReturnedMetric } from "../lib/types.ts";
-import { Staker, getAllStakers, getEffectiveGGPStake } from "../lib/stakers.ts";
-
+import { getAllStakers, getEffectiveGGPStake, Staker } from "../lib/stakers.ts";
 
 const stakerMetrics: Metrics[] = [
   {
@@ -40,9 +39,9 @@ const stakerMetrics: Metrics[] = [
           desc: metrics.metric.desc,
           value: parseFloat(utils.formatEther(res)),
         };
-      }
-    }
-  }
+      },
+    },
+  },
 ];
 
 export default stakerMetrics;
