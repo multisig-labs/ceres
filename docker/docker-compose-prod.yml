@@ -13,7 +13,23 @@ services:
     command: serve
     stop_signal: SIGINT
     user: "0:0"
+    healthcheck:
+      test: curl --fail http://localhost:8080/ || exit 1
+      interval: 5m
+      timeout: 30s
+      retries: 5
+      start_period: 30s
 
+  autoheal:
+    image: willfarrell/autoheal:latest
+    tty: true
+    restart: always
+    environment:
+      - AUTOHEAL_INTERVAL=60
+      - AUTOHEAL_START_PERIOD=300
+      - AUTOHEAL_DEFAULT_STOP_TIMEOUT=10
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
   exporter:
     container_name: exporter
