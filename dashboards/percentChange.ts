@@ -10,6 +10,7 @@ const metrics = {
   totalMinipoolsPercentChange:
     "sum(minipools_status_launched) + sum(minipools_status_staking) + sum(minipools_status_prelaunch) + sum(minipools_status_finished) + sum(minipools_status_withdrawable) + sum(minipools_status_cancelled) + sum(minipools_status_error)",
   effectiveGGPStakePercentChange: "effective_ggp_stake * ggp_price_in_avax",
+  ggAVAXExchange: "ggavax_avax_exchange_rate",
 };
 
 interface percentChangeMetric {
@@ -105,6 +106,13 @@ const percentChangeMetrics: percentChangeMetric[] = [
     desc: "The percent change in effective GGP stake over the last week",
     timeFrame: "week",
     query: metrics.effectiveGGPStakePercentChange,
+  },
+  {
+    name: "ggAVAXMonthlyInterestMonth",
+    title: "GG-AVAX Monthly Interest (Month)",
+    desc: "The monthly interest rate for GG-AVAX",
+    timeFrame: "month",
+    query: metrics.ggAVAXExchange,
   },
 ];
 
