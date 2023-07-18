@@ -109,8 +109,8 @@ const percentChangeMetrics: percentChangeMetric[] = [
   },
   {
     name: "ggAVAXMonthlyInterestMonth",
-    title: "GG-AVAX Monthly Interest (Month)",
-    desc: "The monthly interest rate for GG-AVAX",
+    title: "ggAVAX Monthly Interest",
+    desc: "The monthly interest rate for ggAVAX",
     timeFrame: "month",
     query: metrics.ggAVAXExchange,
   },
