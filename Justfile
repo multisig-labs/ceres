@@ -105,7 +105,7 @@ run *json: check
 
 # runs the executable in serve mode
 serve: check
-    deno run --unstable --allow-net --allow-read main.ts --mode serve
+    deno run --unstable --allow-net --allow-read --allow-sys main.ts --mode serve
 
 # runs the executable in dump mode
 dump: check
