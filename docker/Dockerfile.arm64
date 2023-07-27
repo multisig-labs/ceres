@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN deno compile --allow-sys --unstable --unsafely-ignore-certificate-errors --allow-net --allow-write --allow-read --output ceres main.ts
+RUN deno compile --allow-sys --allow-env --unstable --unsafely-ignore-certificate-errors --allow-net --allow-write --allow-read --output ceres main.ts
 
 FROM debian:bullseye-slim
 
