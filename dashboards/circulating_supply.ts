@@ -4,6 +4,7 @@ import type { Metrics, ReturnedMetric } from "../lib/types.ts";
 async function getData(query: string) {
   const auth = await google.auth.getClient({
     scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
+    keyFile: Deno.env.get("GOOGLE_APPLICATION_CREDENTIALS")!,
   });
 
   const sheets = google.sheets({ version: "v4", auth });
