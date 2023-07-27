@@ -1,3 +1,4 @@
+set dotenv-load
 IMAGE_NAME := "ghcr.io/multisig-labs/ceres:main"
 
 # default task
@@ -100,7 +101,7 @@ clean:
 
 # runs the executable in stout mode
 run *json: check
-    deno run --unstable --allow-net --allow-read main.ts {{json}}
+    deno run --unstable --allow-env --allow-net --allow-read --allow-sys main.ts {{json}}
 
 # runs the executable in serve mode
 serve: check
