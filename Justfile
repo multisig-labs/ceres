@@ -82,7 +82,7 @@ up mode="dev": check
     else 
       just pull-docker
     fi
-    docker compose -f docker/docker-compose-{{mode}}.yml up -d
+    docker compose --env-file .env -f docker/docker-compose-{{mode}}.yml up -d
 
 # shows daemon logs
 logs mode="dev":
