@@ -1,6 +1,11 @@
 import { parse } from "https://deno.land/std@0.178.0/flags/mod.ts";
+import {
+  parse as parseCsv,
+} from "https://deno.land/std@0.82.0/encoding/csv.ts";
 import { providers } from "https://esm.sh/ethers@5.7.2?dts";
-
+import { readFileSync } from "https://deno.land/x/deno@v0.38.0/std/node/fs.ts";
+import * as path from "https://deno.land/x/deno@v0.38.0/std/node/path.ts";
+// import * as parseCSV from "npm:csv-parse";
 import {
   contractHandler,
   customHandler,
@@ -15,7 +20,6 @@ import loadConfig from "./lib/loadConfig.ts";
 
 // import the dashboards
 import dashboards from "./dashboards/index.ts";
-import CirculatingSupply from "./dashboards/circulating_supply.ts";
 
 Deno.addSignalListener("SIGINT", () => {
   console.log("interrupted!");
@@ -106,21 +110,89 @@ const gatherDashboards = async (
   return obj;
 };
 
-const ggpCS = async () => {
-  const results = await Promise.all(CirculatingSupply.map(handler));
-  const obj = {} as ReturnedMetrics;
-  results.forEach((result) => {
-    obj[result.name as string] = result;
+const ggpCSCalc = async (): Promise<unknown> => {
+  const csvFilePath = path.resolve("./tokenholders.csv");
+  const totalSupply = 22500000;
+  let circulatingSupply = 0;
+
+  const headers = [
+    "name",
+    "percentageOfTotalSupply",
+    "lockUpLengthMonths",
+    "vestingLengthMonths",
+    "vestingIntervalInMonths",
+    "vestingStartDate",
+    "initialTokens",
+  ];
+
+  const fileContent = readFileSync(csvFilePath, { encoding: "utf-8" });
+
+  const tokenHolders = await parseCsv(fileContent, {
+    separator: ",",
+    columns: headers,
+    skipFirstRow: true,
   });
-  return obj?.circulatingSupply?.value;
+
+  tokenHolders.forEach(function (holder) {
+    let vestedTokenAmt;
+
+    // convert from string to date
+    const [month, day, year] = holder.vestingStartDate.split("/");
+    const vestingDate = new Date(+year, +month, +day);
+    const now = new Date();
+
+    // if the vesting date has past
+    if (now.getTime() >= vestingDate.getTime()) {
+      //calculate how many months has passed
+      const differeceInMonths = getMonthDifference(vestingDate, now);
+
+      if (holder.vestingIntervalInMonths <= differeceInMonths) {
+        if (holder.name == "IDO" || holder.name == "Liquidity") {
+          vestedTokenAmt = Number(holder.initialTokens);
+        } else {
+          const percentageValue =
+            parseFloat(holder.percentageOfTotalSupply.replace("%", "")) / 100;
+
+          const totalTokensDue = totalSupply * percentageValue;
+
+          const amtPerInterval = totalTokensDue /
+            (Number(holder.vestingLengthMonths) /
+              Number(holder.vestingIntervalInMonths));
+
+          // console.log(amtPerInterval);
+          const intervalsPassed = differeceInMonths /
+            Number(holder.vestingIntervalInMonths);
+
+          // console.log(intervalsPassed);
+          vestedTokenAmt = amtPerInterval * intervalsPassed;
+        }
+      } else {
+        vestedTokenAmt = 0;
+      }
+    } else {
+      vestedTokenAmt = 0;
+    }
+    circulatingSupply = circulatingSupply + vestedTokenAmt;
+  });
+
+  return circulatingSupply;
 };
+
+function getMonthDifference(startDate: Date, endDate: Date) {
+  return (
+    endDate.getMonth() -
+    startDate.getMonth() +
+    12 * (endDate.getFullYear() - startDate.getFullYear())
+  );
+}
 
 const serveHTTP = async (conn: Deno.Conn) => {
   const httpConn = Deno.serveHttp(conn);
   for await (const requestEvent of httpConn) {
     const url = new URL(requestEvent.request.url);
     if (url.pathname === "/ggpCirculatingSupply") {
-      const results = await ggpCS();
+      const results = await ggpCSCalc();
+      // console.log(results);
       requestEvent.respondWith(
         new Response(JSON.stringify(results), {
           status: 200,
