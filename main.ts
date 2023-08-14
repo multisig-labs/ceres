@@ -1,7 +1,5 @@
 import { parse } from "https://deno.land/std@0.178.0/flags/mod.ts";
-import {
-  parse as parseCsv,
-} from "https://deno.land/std@0.82.0/encoding/csv.ts";
+import { parse as parseCsv } from "https://deno.land/std@0.178.0/encoding/csv.ts";
 import { providers } from "https://esm.sh/ethers@5.7.2?dts";
 import { readFileSync } from "https://deno.land/x/deno@v0.38.0/std/node/fs.ts";
 import * as path from "https://deno.land/x/deno@v0.38.0/std/node/path.ts";
@@ -51,7 +49,7 @@ const { contracts, deployment } = await loadConfig();
 
 const provider = new providers.StaticJsonRpcProvider(
   deployment.sources.eth,
-  deployment.chain.chainID,
+  deployment.chain.chainID
 );
 
 // helps the dashboards
@@ -88,7 +86,7 @@ const handler = async (metrics: Metrics): Promise<ReturnedMetric> => {
 };
 
 const gatherDashboards = async (
-  concurrentRequests = 15,
+  concurrentRequests = 15
 ): Promise<ReturnedMetrics> => {
   // flatten the dashboards
   // spread (...) doesn't work on dashboards because it's a default export
@@ -127,13 +125,14 @@ const ggpCSCalc = async (): Promise<unknown> => {
 
   const fileContent = readFileSync(csvFilePath, { encoding: "utf-8" });
 
-  const tokenHolders = await parseCsv(fileContent, {
+  const tokenHolders = await parseCsv(fileContent.toString(), {
     separator: ",",
     columns: headers,
     skipFirstRow: true,
   });
 
-  tokenHolders.forEach(function (holder) {
+  // deno-lint-ignore no-explicit-any
+  tokenHolders.forEach(function (holder: any) {
     // convert from string to date
     const [month, day, year] = holder.vestingStartDate.split("/");
     const vestingDate = new Date(+year, +month, +day);
@@ -146,14 +145,15 @@ const ggpCSCalc = async (): Promise<unknown> => {
         if (holder.name === "IDO" || holder.name === "Liquidity") {
           circulatingSupply += Number(holder.initialTokens);
         } else {
-          const percentageValue = parseFloat(holder.percentageOfTotalSupply) /
-            100;
+          const percentageValue =
+            parseFloat(holder.percentageOfTotalSupply) / 100;
           const totalTokensDue = totalSupply * percentageValue;
 
-          const amtPerInterval = totalTokensDue /
+          const amtPerInterval =
+            totalTokensDue /
             (holder.vestingLengthMonths / holder.vestingIntervalInMonths);
-          const intervalsPassed = differenceInMonths /
-            holder.vestingIntervalInMonths;
+          const intervalsPassed =
+            differenceInMonths / holder.vestingIntervalInMonths;
 
           circulatingSupply += amtPerInterval * intervalsPassed;
         }
@@ -185,7 +185,7 @@ const serveHTTP = async (conn: Deno.Conn) => {
           headers: new Headers({
             "content-type": "application/json",
           }),
-        }),
+        })
       );
     } else {
       const filter = url.searchParams.get("filter");
@@ -209,7 +209,7 @@ const serveHTTP = async (conn: Deno.Conn) => {
           headers: new Headers({
             "content-type": "application/json",
           }),
-        }),
+        })
       );
     }
   }
@@ -223,7 +223,7 @@ const dumpToDB = async (path: string) => {
     Object.values(results).map(async (result) => {
       const metric = newModel(result);
       await metric.save();
-    }),
+    })
   );
 };
 
