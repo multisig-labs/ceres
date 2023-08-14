@@ -108,7 +108,7 @@ const gatherDashboards = async (
   return obj;
 };
 
-const ggpCSCalc = async (): Promise<unknown> => {
+const ggpCSCalc = (): number => {
   const csvFilePath = path.resolve("./tokenholders.csv");
   const totalSupply = 22500000;
   let circulatingSupply = 0;
@@ -125,7 +125,7 @@ const ggpCSCalc = async (): Promise<unknown> => {
 
   const fileContent = readFileSync(csvFilePath, { encoding: "utf-8" });
 
-  const tokenHolders = await parseCsv(fileContent.toString(), {
+  const tokenHolders = parseCsv(fileContent.toString(), {
     separator: ",",
     columns: headers,
     skipFirstRow: true,
