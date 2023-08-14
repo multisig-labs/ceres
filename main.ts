@@ -134,45 +134,31 @@ const ggpCSCalc = async (): Promise<unknown> => {
   });
 
   tokenHolders.forEach(function (holder) {
-    let vestedTokenAmt;
-
     // convert from string to date
     const [month, day, year] = holder.vestingStartDate.split("/");
     const vestingDate = new Date(+year, +month, +day);
     const now = new Date();
 
-    // if the vesting date has past
-    if (now.getTime() >= vestingDate.getTime()) {
-      //calculate how many months has passed
-      const differeceInMonths = getMonthDifference(vestingDate, now);
+    if (now >= vestingDate) {
+      const differenceInMonths = getMonthDifference(vestingDate, now);
 
-      if (holder.vestingIntervalInMonths <= differeceInMonths) {
-        if (holder.name == "IDO" || holder.name == "Liquidity") {
-          vestedTokenAmt = Number(holder.initialTokens);
+      if (holder.vestingIntervalInMonths <= differenceInMonths) {
+        if (holder.name === "IDO" || holder.name === "Liquidity") {
+          circulatingSupply += Number(holder.initialTokens);
         } else {
-          const percentageValue =
-            parseFloat(holder.percentageOfTotalSupply.replace("%", "")) / 100;
-
+          const percentageValue = parseFloat(holder.percentageOfTotalSupply) /
+            100;
           const totalTokensDue = totalSupply * percentageValue;
 
           const amtPerInterval = totalTokensDue /
-            (Number(holder.vestingLengthMonths) /
-              Number(holder.vestingIntervalInMonths));
+            (holder.vestingLengthMonths / holder.vestingIntervalInMonths);
+          const intervalsPassed = differenceInMonths /
+            holder.vestingIntervalInMonths;
 
-          // console.log(amtPerInterval);
-          const intervalsPassed = differeceInMonths /
-            Number(holder.vestingIntervalInMonths);
-
-          // console.log(intervalsPassed);
-          vestedTokenAmt = amtPerInterval * intervalsPassed;
+          circulatingSupply += amtPerInterval * intervalsPassed;
         }
-      } else {
-        vestedTokenAmt = 0;
       }
-    } else {
-      vestedTokenAmt = 0;
     }
-    circulatingSupply = circulatingSupply + vestedTokenAmt;
   });
 
   return circulatingSupply;
