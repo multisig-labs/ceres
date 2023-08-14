@@ -11,5 +11,6 @@ FROM debian:bullseye-slim
 WORKDIR /app
 
 COPY --from=builder /app/ceres .
+COPY --from=builder /app/tokenholders.csv .
 
 ENTRYPOINT ["/app/ceres", "--mode"]
