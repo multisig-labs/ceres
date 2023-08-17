@@ -49,7 +49,7 @@ const { contracts, deployment } = await loadConfig();
 
 const provider = new providers.StaticJsonRpcProvider(
   deployment.sources.eth,
-  deployment.chain.chainID
+  deployment.chain.chainID,
 );
 
 // helps the dashboards
@@ -86,7 +86,7 @@ const handler = async (metrics: Metrics): Promise<ReturnedMetric> => {
 };
 
 const gatherDashboards = async (
-  concurrentRequests = 15
+  concurrentRequests = 15,
 ): Promise<ReturnedMetrics> => {
   // flatten the dashboards
   // spread (...) doesn't work on dashboards because it's a default export
@@ -108,10 +108,12 @@ const gatherDashboards = async (
   return obj;
 };
 
-const ggpCSCalc = (): number => {
+const ggpCSandTSCalc = (): number[] => {
   const csvFilePath = path.resolve("./tokenholders.csv");
-  const totalSupply = 22500000;
+  const maxSupply = 22500000;
   let circulatingSupply = 0;
+  const initialSupply = 18000000;
+  let currentTotalSupply = 0;
 
   const headers = [
     "name",
@@ -145,23 +147,26 @@ const ggpCSCalc = (): number => {
         if (holder.name === "IDO" || holder.name === "Liquidity") {
           circulatingSupply += Number(holder.initialTokens);
         } else {
-          const percentageValue =
-            parseFloat(holder.percentageOfTotalSupply) / 100;
-          const totalTokensDue = totalSupply * percentageValue;
+          const percentageValue = parseFloat(holder.percentageOfTotalSupply) /
+            100;
+          const totalTokensDue = maxSupply * percentageValue;
 
-          const amtPerInterval =
-            totalTokensDue /
+          const amtPerInterval = totalTokensDue /
             (holder.vestingLengthMonths / holder.vestingIntervalInMonths);
-          const intervalsPassed =
-            differenceInMonths / holder.vestingIntervalInMonths;
+          const intervalsPassed = differenceInMonths /
+            holder.vestingIntervalInMonths;
 
           circulatingSupply += amtPerInterval * intervalsPassed;
+          if (holder.name == "Rewards") {
+            // Coin gecko definition: # of coins minted, minus any coins burned, if fixed
+            currentTotalSupply = circulatingSupply + initialSupply;
+          }
         }
       }
     }
   });
 
-  return circulatingSupply;
+  return [circulatingSupply, currentTotalSupply];
 };
 
 function getMonthDifference(startDate: Date, endDate: Date) {
@@ -173,19 +178,29 @@ function getMonthDifference(startDate: Date, endDate: Date) {
 }
 
 const serveHTTP = async (conn: Deno.Conn) => {
+  const [circulatingSupply, totalSupply] = await ggpCSandTSCalc();
   const httpConn = Deno.serveHttp(conn);
   for await (const requestEvent of httpConn) {
     const url = new URL(requestEvent.request.url);
     if (url.pathname === "/ggpCirculatingSupply") {
-      const results = await ggpCSCalc();
-      // console.log(results);
+      const results = circulatingSupply;
       requestEvent.respondWith(
         new Response(JSON.stringify(results), {
           status: 200,
           headers: new Headers({
             "content-type": "application/json",
           }),
-        })
+        }),
+      );
+    } else if (url.pathname === "/ggpTotalSupply") {
+      const results = totalSupply;
+      requestEvent.respondWith(
+        new Response(JSON.stringify(results), {
+          status: 200,
+          headers: new Headers({
+            "content-type": "application/json",
+          }),
+        }),
       );
     } else {
       const filter = url.searchParams.get("filter");
@@ -209,7 +224,7 @@ const serveHTTP = async (conn: Deno.Conn) => {
           headers: new Headers({
             "content-type": "application/json",
           }),
-        })
+        }),
       );
     }
   }
@@ -223,7 +238,7 @@ const dumpToDB = async (path: string) => {
     Object.values(results).map(async (result) => {
       const metric = newModel(result);
       await metric.save();
-    })
+    }),
   );
 };
 
