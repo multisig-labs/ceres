@@ -49,7 +49,7 @@ const { contracts, deployment } = await loadConfig();
 
 const provider = new providers.StaticJsonRpcProvider(
   deployment.sources.eth,
-  deployment.chain.chainID,
+  deployment.chain.chainID
 );
 
 // helps the dashboards
@@ -86,7 +86,7 @@ const handler = async (metrics: Metrics): Promise<ReturnedMetric> => {
 };
 
 const gatherDashboards = async (
-  concurrentRequests = 15,
+  concurrentRequests = 15
 ): Promise<ReturnedMetrics> => {
   // flatten the dashboards
   // spread (...) doesn't work on dashboards because it's a default export
@@ -147,14 +147,15 @@ const ggpCSandTSCalc = (): number[] => {
         if (holder.name === "IDO" || holder.name === "Liquidity") {
           circulatingSupply += Number(holder.initialTokens);
         } else {
-          const percentageValue = parseFloat(holder.percentageOfTotalSupply) /
-            100;
+          const percentageValue =
+            parseFloat(holder.percentageOfTotalSupply) / 100;
           const totalTokensDue = maxSupply * percentageValue;
 
-          const amtPerInterval = totalTokensDue /
+          const amtPerInterval =
+            totalTokensDue /
             (holder.vestingLengthMonths / holder.vestingIntervalInMonths);
-          const intervalsPassed = differenceInMonths /
-            holder.vestingIntervalInMonths;
+          const intervalsPassed =
+            differenceInMonths / holder.vestingIntervalInMonths;
 
           circulatingSupply += amtPerInterval * intervalsPassed;
           if (holder.name == "Rewards") {
@@ -177,6 +178,16 @@ function getMonthDifference(startDate: Date, endDate: Date) {
   );
 }
 
+const cacheTime = 60 * 1000; // 1 minute
+
+interface kvCache {
+  // deno-lint-ignore no-explicit-any
+  data: any;
+  timestamp: number;
+}
+
+const kv = await Deno.openKv();
+
 const serveHTTP = async (conn: Deno.Conn) => {
   const [circulatingSupply, totalSupply] = await ggpCSandTSCalc();
   const httpConn = Deno.serveHttp(conn);
@@ -190,7 +201,7 @@ const serveHTTP = async (conn: Deno.Conn) => {
           headers: new Headers({
             "content-type": "application/json",
           }),
-        }),
+        })
       );
     } else if (url.pathname === "/ggpTotalSupply") {
       const results = totalSupply;
@@ -200,10 +211,31 @@ const serveHTTP = async (conn: Deno.Conn) => {
           headers: new Headers({
             "content-type": "application/json",
           }),
-        }),
+        })
       );
     } else {
       const filter = url.searchParams.get("filter");
+      const useCache = url.searchParams.get("useCache") !== null;
+      if (useCache) {
+        // get the cache from the kv store
+        const cache = await kv.get<kvCache>(["cache"]);
+        if (cache.value) {
+          // check the time. If the time is less than the current time, use the cache
+          const cacheTime = new Date(cache.value.timestamp);
+          const now = new Date();
+          if (cacheTime > now) {
+            requestEvent.respondWith(
+              new Response(JSON.stringify(cache.value.data), {
+                status: 200,
+                headers: new Headers({
+                  "content-type": "application/json",
+                }),
+              })
+            );
+            continue;
+          }
+        }
+      }
       const results = await gatherDashboards(concurrentRequests);
       if (filter) {
         const filters = filter.split(",");
@@ -218,13 +250,18 @@ const serveHTTP = async (conn: Deno.Conn) => {
           });
         });
       }
+      // store results in cache
+      await kv.set(["cache"], {
+        data: results,
+        timestamp: Date.now() + cacheTime,
+      });
       requestEvent.respondWith(
         new Response(JSON.stringify(results), {
           status: 200,
           headers: new Headers({
             "content-type": "application/json",
           }),
-        }),
+        })
       );
     }
   }
@@ -238,7 +275,7 @@ const dumpToDB = async (path: string) => {
     Object.values(results).map(async (result) => {
       const metric = newModel(result);
       await metric.save();
-    }),
+    })
   );
 };
 
