@@ -137,14 +137,23 @@ const ggpCSandTSCalc = (): number[] => {
   tokenHolders.forEach(function (holder: any) {
     // convert from string to date
     const [month, day, year] = holder.vestingStartDate.split("/");
-    const vestingDate = new Date(year, month - 1, day);
+    const vestingDate = new Date(+year, +month - 1, +day);
     const now = new Date();
+
+    holder.percentageOfTotalSupply = parseFloat(
+      holder.percentageOfTotalSupply.replace("%", ""),
+    );
+
+    holder.lockUpLengthMonths = parseInt(holder.lockUpLengthMonths);
+    holder.holderInitialTokens = parseInt(holder.holderInitialTokens);
+    holder.vestingLengthMonths = parseInt(holder.vestingLengthMonths);
+    holder.vestingIntervalInMonths = parseInt(holder.vestingIntervalInMonths);
 
     if (now >= vestingDate) {
       const differenceInMonths = getMonthDifference(vestingDate, now);
       if (holder.vestingIntervalInMonths <= differenceInMonths) {
         if (holder.name === "IDO" || holder.name === "Liquidity") {
-          circulatingSupply += Number(holder.initialTokens);
+          circulatingSupply += parseInt(holder.initialTokens);
         } else if ((holder.name === "Rewards")) {
           const inflation = .04821842;
           let inflatedInitialSupply = initialSupply;
@@ -198,7 +207,8 @@ interface kvCache {
 const kv = await Deno.openKv();
 
 const serveHTTP = async (conn: Deno.Conn) => {
-  const [circulatingSupply, totalSupply] = await ggpCSandTSCalc();
+  const ggpCSTS = ggpCSandTSCalc();
+  const [circulatingSupply, totalSupply] = ggpCSTS;
   const httpConn = Deno.serveHttp(conn);
   for await (const requestEvent of httpConn) {
     const url = new URL(requestEvent.request.url);
