@@ -31,7 +31,7 @@ const RewardsDashboard: Metrics[] = [
       args: [],
       title: "Rewards Cycle Seconds",
       desc: "The length of a rewards cycle",
-      name: "rewardsCycleSeconds",
+      name: "rewardsCycleStartTime",
       formatter: (m: Metrics, value: BigNumber): ReturnedMetric => {
         return {
           name: m.metric.name,
