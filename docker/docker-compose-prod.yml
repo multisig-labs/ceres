@@ -9,7 +9,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./ceres/harvester:/app/config
+      - /home/ubuntu/ceres/harvester:/app/config
     command: serve
     stop_signal: SIGINT
     user: "0:0"
@@ -25,7 +25,7 @@ services:
     restart: always
     platform: linux/amd64
     volumes:
-      - ./ceres/exporter:/app/config
+      - /home/ubuntu/ceres/exporter:/app/config
     image: quay.io/prometheuscommunity/json-exporter
     command:
       - --config.file=/app/config/exporter.yml
@@ -41,8 +41,8 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./ceres/prometheus:/etc/prometheus
-      - ./ceres_data/prometheus:/prometheus
+      - /home/ubuntu/ceres/prometheus:/etc/prometheus
+      - /home/ubuntu/ceres_data/prometheus:/prometheus
     user: "${UID:-0}:${GID:-0}"
 
   caddy:
@@ -52,5 +52,5 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - ./ceres/caddy:/etc/caddy
-      - ./ceres_data/caddy:/data
+      - /home/ubuntu/ceres/caddy:/etc/caddy
+      - /home/ubuntu/ceres_data/caddy:/data
