@@ -4,7 +4,9 @@ version: "3.9"
 services:
   harvester:
     container_name: harvester
-    image: ghcr.io/multisig-labs/ceres:main
+    build:
+      context: ..
+      dockerfile: Dockerfile.amd64
     restart: always
     ports:
       - "8080:8080"
