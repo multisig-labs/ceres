@@ -4,12 +4,14 @@ version: "3.9"
 services:
   harvester:
     container_name: harvester
-    image: ghcr.io/multisig-labs/ceres:main
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.amd64
     restart: always
     ports:
       - "8080:8080"
     volumes:
-      - ../config:/app/config
+      - /home/ubuntu/ceres/harvester:/app/config
     command: serve
     stop_signal: SIGINT
     user: "0:0"
@@ -20,23 +22,12 @@ services:
       retries: 5
       start_period: 30s
 
-  autoheal:
-    image: willfarrell/autoheal:latest
-    tty: true
-    restart: always
-    environment:
-      - AUTOHEAL_INTERVAL=60
-      - AUTOHEAL_START_PERIOD=300
-      - AUTOHEAL_DEFAULT_STOP_TIMEOUT=10
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-
   exporter:
     container_name: exporter
     restart: always
     platform: linux/amd64
     volumes:
-      - ../config:/app/config
+      - /home/ubuntu/ceres/exporter:/app/config
     image: quay.io/prometheuscommunity/json-exporter
     command:
       - --config.file=/app/config/exporter.yml
@@ -52,8 +43,8 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ../config:/etc/prometheus
-      - ../data/prometheus:/prometheus
+      - /home/ubuntu/ceres/prometheus:/etc/prometheus
+      - /home/ubuntu/ceres_data/prometheus:/prometheus
     user: "${UID:-0}:${GID:-0}"
 
   caddy:
@@ -61,8 +52,7 @@ services:
     image: caddy:alpine
     restart: always
     ports:
-      - "80:80"
-      - "443:443"
+      - "8888:8888"
     volumes:
-      - ../config/Caddyfile:/etc/caddy/Caddyfile
-      - ../data/caddy:/data
+      - /home/ubuntu/ceres/caddy:/etc/caddy
+      - /home/ubuntu/ceres_data/caddy:/data

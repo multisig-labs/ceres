@@ -49,7 +49,7 @@ const { contracts, deployment } = await loadConfig();
 
 const provider = new providers.StaticJsonRpcProvider(
   deployment.sources.eth,
-  deployment.chain.chainID,
+  deployment.chain.chainID
 );
 
 // helps the dashboards
@@ -86,7 +86,7 @@ const handler = async (metrics: Metrics): Promise<ReturnedMetric> => {
 };
 
 const gatherDashboards = async (
-  concurrentRequests = 15,
+  concurrentRequests = 15
 ): Promise<ReturnedMetrics> => {
   // flatten the dashboards
   // spread (...) doesn't work on dashboards because it's a default export
@@ -141,7 +141,7 @@ const ggpCSandTSCalc = (): number[] => {
     const now = new Date();
 
     holder.percentageOfTotalSupply = parseFloat(
-      holder.percentageOfTotalSupply.replace("%", ""),
+      holder.percentageOfTotalSupply.replace("%", "")
     );
 
     holder.lockUpLengthMonths = parseInt(holder.lockUpLengthMonths);
@@ -154,29 +154,29 @@ const ggpCSandTSCalc = (): number[] => {
       if (holder.vestingIntervalInMonths <= differenceInMonths) {
         if (holder.name === "IDO" || holder.name === "Liquidity") {
           circulatingSupply += parseInt(holder.initialTokens);
-        } else if ((holder.name === "Rewards")) {
-          const inflation = .04821842;
+        } else if (holder.name === "Rewards") {
+          const inflation = 0.04821842;
           let inflatedInitialSupply = initialSupply;
-          const intervalsPassed = differenceInMonths /
-            holder.vestingIntervalInMonths;
+          const intervalsPassed =
+            differenceInMonths / holder.vestingIntervalInMonths;
           for (let i = 0; i < intervalsPassed; i++) {
-            let mintedAmt = inflatedInitialSupply * (inflation / 12);
-            inflatedInitialSupply += mintedAmt;
+            inflatedInitialSupply += inflatedInitialSupply * (inflation / 12);
           }
           currentTotalSupply = inflatedInitialSupply;
           circulatingSupply += inflatedInitialSupply - initialSupply;
         } else {
-          const percentageValue = parseFloat(holder.percentageOfTotalSupply) /
-            100;
+          const percentageValue =
+            parseFloat(holder.percentageOfTotalSupply) / 100;
           // console.log(holder.name, percentageValue);
           const totalTokensDue = maxSupply * percentageValue;
           // console.log(holder.name, totalTokensDue);
-          const amtPerInterval = totalTokensDue /
+          const amtPerInterval =
+            totalTokensDue /
             (holder.vestingLengthMonths / holder.vestingIntervalInMonths);
           // console.log(holder.name, amtPerInterval);
 
-          const intervalsPassed = differenceInMonths /
-            holder.vestingIntervalInMonths;
+          const intervalsPassed =
+            differenceInMonths / holder.vestingIntervalInMonths;
           // console.log(holder.name, intervalsPassed);
 
           circulatingSupply += amtPerInterval * intervalsPassed;
@@ -220,7 +220,7 @@ const serveHTTP = async (conn: Deno.Conn) => {
           headers: new Headers({
             "content-type": "application/json",
           }),
-        }),
+        })
       );
     } else if (url.pathname === "/ggpTotalSupply") {
       const results = totalSupply;
@@ -230,7 +230,7 @@ const serveHTTP = async (conn: Deno.Conn) => {
           headers: new Headers({
             "content-type": "application/json",
           }),
-        }),
+        })
       );
     } else {
       const filter = url.searchParams.get("filter");
@@ -249,7 +249,7 @@ const serveHTTP = async (conn: Deno.Conn) => {
                 headers: new Headers({
                   "content-type": "application/json",
                 }),
-              }),
+              })
             );
             continue;
           }
@@ -280,7 +280,7 @@ const serveHTTP = async (conn: Deno.Conn) => {
           headers: new Headers({
             "content-type": "application/json",
           }),
-        }),
+        })
       );
     }
   }
@@ -294,7 +294,7 @@ const dumpToDB = async (path: string) => {
     Object.values(results).map(async (result) => {
       const metric = newModel(result);
       await metric.save();
-    }),
+    })
   );
 };
 
