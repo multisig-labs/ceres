@@ -5,7 +5,7 @@ services:
   harvester:
     container_name: harvester
     build:
-      context: ..
+      context: .
       dockerfile: docker/Dockerfile.amd64
     restart: always
     ports:
