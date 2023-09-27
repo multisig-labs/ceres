@@ -61,8 +61,7 @@ services:
     image: caddy:alpine
     restart: always
     ports:
-      - "80:80"
-      - "443:443"
+      - "8888"
     volumes:
       - ../config/Caddyfile:/etc/caddy/Caddyfile
       - ../data/caddy:/data
