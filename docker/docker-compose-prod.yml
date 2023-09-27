@@ -63,5 +63,5 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - ./ceres/Caddyfile:/etc/caddy/Caddyfile
-      - ./ceres/caddy:/data
+      - ./ceres:/etc/caddy
+      - ./ceres_caddy:/data
