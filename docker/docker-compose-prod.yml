@@ -9,7 +9,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ../config:/app/config
+      - ./ceres/config:/app/config
     command: serve
     stop_signal: SIGINT
     user: "0:0"
@@ -36,7 +36,7 @@ services:
     restart: always
     platform: linux/amd64
     volumes:
-      - ../config:/app/config
+      - ./ceres/config:/app/config
     image: quay.io/prometheuscommunity/json-exporter
     command:
       - --config.file=/app/config/exporter.yml
@@ -52,8 +52,8 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ../config:/etc/prometheus
-      - ../data/prometheus:/prometheus
+      - ./ceres/config:/etc/prometheus
+      - ./ceres/prometheus:/prometheus
     user: "${UID:-0}:${GID:-0}"
 
   caddy:
@@ -63,5 +63,5 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - ../config/Caddyfile:/etc/caddy/Caddyfile
-      - ../data/caddy:/data
+      - ./ceres/Caddyfile:/etc/caddy/Caddyfile
+      - ./ceres/caddy:/data
