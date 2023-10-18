@@ -1,6 +1,40 @@
 // deno-lint-ignore-file no-explicit-any
 import type { Metrics, ReturnedMetric } from "../lib/types.ts";
-import { BigNumberish, Contract, utils } from "https://esm.sh/ethers@5.7.2?dts";
+import {
+  BigNumberish,
+  Contract,
+  utils,
+  providers,
+} from "https://esm.sh/ethers@5.7.2?dts";
+
+const getMostRecentEvent = async (
+  provider: providers.Provider,
+  contracts: any,
+  deployment: any,
+  direction: string
+) => {
+  const currentBlockNumber = await provider.getBlockNumber();
+  const blocksPerDay = 42000; // guess based on https://snowtrace.io/chart/blocks
+  const fromBlock = Math.max(currentBlockNumber - blocksPerDay, 0);
+  const ggAVAX = contracts.TokenggAVAX;
+  const contract = new Contract(
+    deployment.addresses.TokenggAVAX,
+    ggAVAX.abi,
+    provider
+  );
+  const contractInterface = new utils.Interface(ggAVAX.abi);
+  const events = await contract.queryFilter(
+    direction === "deposit"
+      ? contract.filters.Deposit()
+      : contract.filters.Withdraw(),
+    fromBlock
+  );
+  const sortedEvents = events.sort((a, b) => b.blockNumber - a.blockNumber);
+  const mostRecentEvent = sortedEvents[0];
+  const decodedLog = contractInterface.parseLog(mostRecentEvent);
+  const shares = decodedLog.args.shares;
+  return shares;
+};
 
 const ggAVAXDashboard: Metrics[] = [
   {
@@ -159,27 +193,12 @@ const ggAVAXDashboard: Metrics[] = [
         };
       },
       fn: async (provider, _, contracts, deployment) => {
-        const currentBlockNumber = await provider.getBlockNumber();
-        const blocksPerDay = 42000; // guess based on https://snowtrace.io/chart/blocks
-        const fromBlock = Math.max(currentBlockNumber - blocksPerDay, 0);
-        const ggAVAX = contracts.TokenggAVAX;
-        const contract = new Contract(
-          deployment.addresses.TokenggAVAX,
-          ggAVAX.abi,
-          provider
+        return await getMostRecentEvent(
+          provider,
+          contracts,
+          deployment,
+          "withdraw"
         );
-        const contractInterface = new utils.Interface(ggAVAX.abi);
-        const events = await contract.queryFilter(
-          contract.filters.Withdraw(),
-          fromBlock
-        );
-        const sortedEvents = events.sort(
-          (a, b) => b.blockNumber - a.blockNumber
-        );
-        const mostRecentEvent = sortedEvents[0];
-        const decodedLog = contractInterface.parseLog(mostRecentEvent);
-        const shares = decodedLog.args.shares;
-        return shares;
       },
     },
   },
@@ -199,27 +218,12 @@ const ggAVAXDashboard: Metrics[] = [
         };
       },
       fn: async (provider, _, contracts, deployment) => {
-        const currentBlockNumber = await provider.getBlockNumber();
-        const blocksPerDay = 42000; // guess based on https://snowtrace.io/chart/blocks
-        const fromBlock = Math.max(currentBlockNumber - blocksPerDay, 0);
-        const ggAVAX = contracts.TokenggAVAX;
-        const contract = new Contract(
-          deployment.addresses.TokenggAVAX,
-          ggAVAX.abi,
-          provider
+        return await getMostRecentEvent(
+          provider,
+          contracts,
+          deployment,
+          "deposit"
         );
-        const contractInterface = new utils.Interface(ggAVAX.abi);
-        const events = await contract.queryFilter(
-          contract.filters.Deposit(),
-          fromBlock
-        );
-        const sortedEvents = events.sort(
-          (a, b) => b.blockNumber - a.blockNumber
-        );
-        const mostRecentEvent = sortedEvents[0];
-        const decodedLog = contractInterface.parseLog(mostRecentEvent);
-        const shares = decodedLog.args.shares;
-        return shares;
       },
     },
   },
