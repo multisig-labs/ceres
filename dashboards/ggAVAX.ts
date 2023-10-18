@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
 import type { Metrics, ReturnedMetric } from "../lib/types.ts";
-import { BigNumberish, utils } from "https://esm.sh/ethers@5.7.2?dts";
+import { BigNumberish, Contract, utils } from "https://esm.sh/ethers@5.7.2?dts";
 
 const ggAVAXDashboard: Metrics[] = [
   {
@@ -140,6 +140,86 @@ const ggAVAXDashboard: Metrics[] = [
           desc: m.metric.desc,
           value: parseFloat(utils.formatEther(value)),
         };
+      },
+    },
+  },
+  {
+    type: "custom",
+    metric: {
+      source: "eth",
+      name: "ggAVAXRecentWithdraw",
+      title: "Most Recent ggAVAX Withdraw",
+      desc: "The most recent ggAVAX withdraw",
+      formatter: (m: Metrics, value: BigNumberish): ReturnedMetric => {
+        return {
+          name: m.metric.name,
+          title: m.metric.title,
+          desc: m.metric.desc,
+          value: parseFloat(utils.formatEther(value)),
+        };
+      },
+      fn: async (provider, _, contracts, deployment) => {
+        const currentBlockNumber = await provider.getBlockNumber();
+        const blocksPerDay = 42000; // guess based on https://snowtrace.io/chart/blocks
+        const fromBlock = Math.max(currentBlockNumber - blocksPerDay, 0);
+        const ggAVAX = contracts.TokenggAVAX;
+        const contract = new Contract(
+          deployment.addresses.TokenggAVAX,
+          ggAVAX.abi,
+          provider
+        );
+        const contractInterface = new utils.Interface(ggAVAX.abi);
+        const events = await contract.queryFilter(
+          contract.filters.Withdraw(),
+          fromBlock
+        );
+        const sortedEvents = events.sort(
+          (a, b) => b.blockNumber - a.blockNumber
+        );
+        const mostRecentEvent = sortedEvents[0];
+        const decodedLog = contractInterface.parseLog(mostRecentEvent);
+        const shares = decodedLog.args.shares;
+        return shares;
+      },
+    },
+  },
+  {
+    type: "custom",
+    metric: {
+      source: "eth",
+      name: "ggAVAXRecentDeposit",
+      title: "Most Recent ggAVAX Deposit",
+      desc: "The most recent ggAVAX deposit",
+      formatter: (m: Metrics, value: BigNumberish): ReturnedMetric => {
+        return {
+          name: m.metric.name,
+          title: m.metric.title,
+          desc: m.metric.desc,
+          value: parseFloat(utils.formatEther(value)),
+        };
+      },
+      fn: async (provider, _, contracts, deployment) => {
+        const currentBlockNumber = await provider.getBlockNumber();
+        const blocksPerDay = 42000; // guess based on https://snowtrace.io/chart/blocks
+        const fromBlock = Math.max(currentBlockNumber - blocksPerDay, 0);
+        const ggAVAX = contracts.TokenggAVAX;
+        const contract = new Contract(
+          deployment.addresses.TokenggAVAX,
+          ggAVAX.abi,
+          provider
+        );
+        const contractInterface = new utils.Interface(ggAVAX.abi);
+        const events = await contract.queryFilter(
+          contract.filters.Deposit(),
+          fromBlock
+        );
+        const sortedEvents = events.sort(
+          (a, b) => b.blockNumber - a.blockNumber
+        );
+        const mostRecentEvent = sortedEvents[0];
+        const decodedLog = contractInterface.parseLog(mostRecentEvent);
+        const shares = decodedLog.args.shares;
+        return shares;
       },
     },
   },
