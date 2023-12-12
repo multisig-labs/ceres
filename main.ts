@@ -233,8 +233,8 @@ const serveHTTP = async (conn: Deno.Conn) => {
         })
       );
     } else {
-      const filter = url.searchParams.get("filter");
-      const useCache = url.searchParams.get("useCache") !== null;
+      const filter = url.pathname.includes("filter");
+      const useCache = filter;
       if (useCache) {
         // get the cache from the kv store
         const cache = await kv.get<kvCache>(["cache"]);
@@ -257,7 +257,7 @@ const serveHTTP = async (conn: Deno.Conn) => {
       }
       const results = await gatherDashboards(concurrentRequests);
       if (filter) {
-        const filters = filter.split(",");
+        const filters = ['rialto', 'balance'];
         // case insensitive. if the key contains the filter, return it
         Object.keys(results).forEach((key) => {
           const lowerKey = key.toLowerCase();
