@@ -235,7 +235,7 @@ const serveHTTP = async (conn: Deno.Conn) => {
     } else {
       const queryParams = url.searchParams;
       const filter = queryParams.get("token") !== Deno.env.get("TOKEN");
-      const useCache = filter;
+      const useCache = !filter;
       if (useCache) {
         // get the cache from the kv store
         const cache = await kv.get<kvCache>(["cache"]);
@@ -270,11 +270,13 @@ const serveHTTP = async (conn: Deno.Conn) => {
           });
         });
       }
-      // store results in cache
-      await kv.set(["cache"], {
-        data: results,
-        timestamp: Date.now() + cacheTime,
-      });
+      if (useCache) {
+        // store results in cache
+        await kv.set(["cache"], {
+          data: results,
+          timestamp: Date.now() + cacheTime,
+        });
+      }
       requestEvent.respondWith(
         new Response(JSON.stringify(results), {
           status: 200,
