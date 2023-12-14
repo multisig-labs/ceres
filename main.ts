@@ -233,7 +233,7 @@ const serveHTTP = async (conn: Deno.Conn) => {
         })
       );
     } else {
-      const filter = url.pathname.includes("filter");
+      const filter = true;
       const useCache = filter;
       if (useCache) {
         // get the cache from the kv store
@@ -257,7 +257,7 @@ const serveHTTP = async (conn: Deno.Conn) => {
       }
       const results = await gatherDashboards(concurrentRequests);
       if (filter) {
-        const filters = ['rialto', 'balance'];
+        const filters = ["rialto", "balance"];
         // case insensitive. if the key contains the filter, return it
         Object.keys(results).forEach((key) => {
           const lowerKey = key.toLowerCase();
