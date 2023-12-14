@@ -233,7 +233,8 @@ const serveHTTP = async (conn: Deno.Conn) => {
         })
       );
     } else {
-      const filter = true;
+      const queryParams = url.searchParams;
+      const filter = queryParams.get("token") !== Deno.env.get("TOKEN");
       const useCache = filter;
       if (useCache) {
         // get the cache from the kv store
