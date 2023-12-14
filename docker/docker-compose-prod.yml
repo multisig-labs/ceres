@@ -13,6 +13,8 @@ services:
     command: serve
     stop_signal: SIGINT
     user: "0:0"
+    environment:
+      - TOKEN=${TOKEN}
     healthcheck:
       test: curl --fail http://localhost:8080/ || exit 1
       interval: 5m
