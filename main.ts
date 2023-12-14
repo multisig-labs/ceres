@@ -235,7 +235,7 @@ const serveHTTP = async (conn: Deno.Conn) => {
     } else {
       const queryParams = url.searchParams;
       const filter = queryParams.get("token") !== Deno.env.get("TOKEN");
-      const useCache = !filter;
+      const useCache = filter;
       if (useCache) {
         // get the cache from the kv store
         const cache = await kv.get<kvCache>(["cache"]);
