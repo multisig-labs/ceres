@@ -1,5 +1,6 @@
 import type { Metrics, ReturnedMetric } from "../lib/types.ts";
 import { calculatePercentChange } from "../lib/percentChange.ts";
+import { ggAVAXCalcAPY } from "../lib/apy.ts";
 
 const metrics = {
   tvlPercentChange:
@@ -139,6 +140,28 @@ const PercentChangeDashboard: Metrics[] = percentChangeMetrics.map((m) => {
       },
     },
   };
+});
+
+PercentChangeDashboard.push({
+  type: "custom",
+  metric: {
+    source: "prometheus",
+    fn: () => {
+      return ggAVAXCalcAPY();
+    },
+    args: [],
+    title: "ggAVAX Estimated APY",
+    desc: "The estimated interest rate for ggAVAX",
+    name: "ggAVAXAPY",
+    formatter: (m: Metrics, value: number): ReturnedMetric => {
+      return {
+        title: m.metric.title,
+        desc: m.metric.desc,
+        name: m.metric.name,
+        value: parseFloat(value.toFixed(2)),
+      };
+    },
+  },
 });
 
 export default PercentChangeDashboard;
