@@ -25,5 +25,5 @@ export const ggAVAXCalcAPY = async () => {
     ((currentExchangeValue - threeMonthAgoExchangeValue) /
       Math.abs(threeMonthAgoExchangeValue)) *
     100;
-  return apy * 4;
+  return apy * -4;
 };
