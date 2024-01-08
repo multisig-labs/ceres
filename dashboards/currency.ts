@@ -1,4 +1,5 @@
 import type { Metrics, ReturnedMetric } from "../lib/types.ts";
+const apiKey = Deno.env.get("CMC_PRO_API_KEY");
 
 type AvaxPrice = {
   price: number;
