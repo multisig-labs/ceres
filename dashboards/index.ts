@@ -10,6 +10,7 @@ import RialtoDashboard from "./rialto.ts";
 import OrcDashboard from "./orc.ts";
 import CurrencyDashboard from "./currency.ts";
 import PercentChangeDashboard from "./percentChange.ts";
+import NodeAprDashboard from "./nodeApr.ts";
 
 export default [
   MinipoolDashboard,
@@ -23,4 +24,5 @@ export default [
   OrcDashboard,
   CurrencyDashboard,
   PercentChangeDashboard,
+  NodeAprDashboard,
 ];
